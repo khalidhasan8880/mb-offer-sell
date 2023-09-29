@@ -1,36 +1,51 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Home from '@mui/icons-material/Home';
+import { styled } from '@mui/system';
+import { History } from '@mui/icons-material';
+
+const StyledBottomNavigation = styled(BottomNavigation)({
+  width: '100%',
+  position: 'fixed',
+  bottom: 0,
+  backgroundColor: '#555', // Updated background color to match the suggested color scheme
+  zIndex: (theme) => theme.zIndex.appBar + 1,
+});
+
+const StyledBottomNavigationAction = styled(BottomNavigationAction)(() => ({
+  color: '#ccc',
+  transition: '0.3s',
+  '&.Mui-selected': {
+    color: '#FFD700',
+    backgroundColor: '#444', 
+  },
+  '&:hover': {
+    backgroundColor: '#444',
+  },
+}));
 
 export default function BottomNav() {
-  const [value, setValue] = useState('recents');
+  const [value, setValue] = useState('home');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <BottomNavigation className='fixed bottom-0 left-0 right-0 mx-auto' value={value} onChange={handleChange}>
-      <BottomNavigationAction
-        label="Recents"
-        value="recents"
-        icon={<RestoreIcon />}
+    <StyledBottomNavigation value={value} onChange={handleChange}>
+      <StyledBottomNavigationAction
+        label="Home"
+        value="home"
+        icon={<Home />}
       />
-      <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
-        icon={<FavoriteIcon />}
+      <StyledBottomNavigationAction
+        label="History"
+        value="history"
+        icon={<History />}
       />
-      <BottomNavigationAction
-        label="Nearby"
-        value="nearby"
-        icon={<LocationOnIcon />}
-      />
-      <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
-    </BottomNavigation>
+      
+      
+    </StyledBottomNavigation>
   );
 }

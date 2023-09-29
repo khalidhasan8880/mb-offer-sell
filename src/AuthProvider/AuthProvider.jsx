@@ -4,7 +4,8 @@ import app from "../Firebase/firebase.config";
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app)
 export const AuthContext = createContext()
-const PrivetRoute = ({children}) => {
+console.log(auth);
+const AuthProvider = ({children}) => {
 const [user, setUser] = useState(null)
 const [loading, setLoading] = useState(true)
 
@@ -21,12 +22,11 @@ const [loading, setLoading] = useState(true)
   setLoading(true)
   return createUserWithEmailAndPassword(auth, email, password)
  }
+ console.log(user);
 
   const logIn = (email, password) => {
       setLoading(true)
       return signInWithEmailAndPassword(auth, email, password)
-      .then(()=>{
-      })
   }
   const logOut = () => {
       setLoading(true)
@@ -49,8 +49,8 @@ const [loading, setLoading] = useState(true)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
+          console.log(currentUser?.email);
             setUser(currentUser)
-            setLoading(false)
            fetch('http://localhost:5000/jwt',{
             method:"POST",
             headers:{
@@ -61,6 +61,7 @@ const [loading, setLoading] = useState(true)
           })
            .then((res)=>res.json())
            .then(data=>{
+            
             localStorage.setItem('token', data?.token)
            
             console.log(currentUser);
@@ -102,9 +103,10 @@ const [loading, setLoading] = useState(true)
         loading,
         user,
     }
-    return (<AuthContext.Provider value={authInfo}>
+    return (
+    <AuthContext.Provider value={authInfo}>
         {children}
     </AuthContext.Provider>)
 };
 
-export default PrivetRoute;
+export default AuthProvider;

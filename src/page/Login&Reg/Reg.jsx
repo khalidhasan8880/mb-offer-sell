@@ -10,6 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 function Copyright(props) {
   return (
@@ -24,20 +26,30 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function Reg() {
+  const {createUser, updateUser}= useContext(AuthContext)
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      phone: data.get('phone'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const name = data.get('name')
+    const email = data.get('email')
+    const password = data.get('password')
+    console.log(email, password);
+    createUser(email, password)
+    .then(()=>{
+      updateUser(name)
+    })
+    .catch(er=>{
+      console.log(er);
+    })
+    // console.log({
+    //   name: data.get('name'),
+    //   phone: data.get('phone'),
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (

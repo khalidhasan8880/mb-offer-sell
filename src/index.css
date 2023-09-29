@@ -24,7 +24,7 @@ h3 {
   font-size: clamp(1.4rem, 2vw, 3rem);
 }
 section{
-    @apply container mx-auto mt-2 sm:mb-32 mb-16
+    @apply container mx-auto mt-2 sm:mb-20 mb-16
 }
 
 .flex-center{
@@ -33,6 +33,24 @@ section{
 .flex-between{
     @apply flex justify-between items-center
 }
+
+
+
+.primary-text{
+  color: #333;
+}
+/* nav  */
+/* #FFD700 */ 
+/* #555 */
+
+
+
+
+
+
+
+
+
 
 .airtel_color{
  color: red;

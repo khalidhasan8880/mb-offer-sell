@@ -1,69 +1,36 @@
 
-import { Link } from "react-router-dom";
-import robi from '../../../assets/robi.png'
-import airtel from '../../../assets/airtel.png'
-import teletalk from '../../../assets/teletalk.png'
-import banglalink from '../../../assets/banglalink.png'
-import grameenphone from '../../../assets/grameenphone.png'
+import { Link } from 'react-router-dom';
+import robi from '../../../assets/robi.png';
+import airtel from '../../../assets/airtel.png';
+import teletalk from '../../../assets/teletalk.png';
+import banglalink from '../../../assets/banglalink.png';
+import grameenphone from '../../../assets/grameenphone.png';
+
+const operators = [
+  { name: 'Robi', path: '/robi', image: robi },
+  { name: 'Airtel', path: '/airtel', image: airtel },
+  { name: 'Grameenphone', path: '/grameenphone', image: grameenphone },
+  { name: 'Banglalink', path: '/banglalink', image: banglalink },
+  { name: 'Teletalk', path: '/teletalk', image: teletalk },
+];
+
 const SelectOperator = () => {
   return (
-    <section className="bg-gray-200">
-    <h3 className="text-4xl text-center my-4 font-bold text-green-500 ">Choose Your Operator</h3>
-    <div className="flex flex-wrap justify-center gap-4 lg:pb-7 lg:pt-3">
-      <Link
-        to="/robi"
-        className="flex flex-col items-center justify-center bg-white p-4 rounded-lg w-32 h-32 hover:bg-gray-100  transition duration-300 ease-in-out"
-      >
-        <img
-          src={robi}
-          alt="Robi"
-          className="w-20 h-20 object-contain"
-        />
-      </Link>
-      <Link
-        to="/airtel"
-        className="flex flex-col items-center justify-center bg-white p-4 rounded-lg w-32 h-32 hover:bg-gray-100  transition duration-300 ease-in-out"
-      >
-        <img
-          src={airtel}
-          alt="Airtel"
-          className="w-20 h-20 object-contain"
-        />
-      </Link>
-      <Link
-        to="/grameenphone"
-        className="flex flex-col items-center justify-center bg-white p-4 rounded-lg w-32 h-32 hover:bg-gray-100  transition duration-300 ease-in-out"
-      >
-        <img
-          src={grameenphone}
-          alt="Grameenphone"
-          className="w-20 h-20 object-contain"
-        />
-      </Link>
-      <Link
-        to="/banglalink"
-        className="flex flex-col items-center justify-center bg-white p-4 rounded-lg w-32 h-32 hover:bg-gray-100  transition duration-300 ease-in-out"
-      >
-        <img
-          src={banglalink}
-          alt="Banglalink"
-          className="w-20 h-20 object-contain"
-        />
-      </Link>
-      <Link
-        to="/teletalk"
-        className="flex flex-col items-center justify-center bg-white p-4 rounded-lg w-32 h-32 hover:bg-gray-100  transition duration-300 ease-in-out"
-      >
-        <img
-          src={teletalk}
-          alt="Teletalk"
-          className="w-20 h-20 object-contain"
-        />
-      </Link>
-    </div>
-  </section>
-  
-  
+    <section className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+      <h2 className="text-3xl mb-6 font-bold text-green-500">Choose Your Operator</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-screen-lg">
+        {operators.map((operator, index) => (
+          <Link
+            to={operator.path}
+            key={index}
+            className="bg-white p-4 rounded-md shadow-sm hover:shadow-md transform hover:scale-105 transition duration-300 ease-in-out flex flex-col items-center"
+          >
+            <img src={operator.image} alt={operator.name} className="w-16 h-16 object-contain mb-2" />
+            <span className="text-sm font-semibold text-gray-700">{operator.name}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 };
 
