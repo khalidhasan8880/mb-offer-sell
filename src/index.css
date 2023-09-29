@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+h1{
+  font-weight: bolder;
+  color: rgb(9, 9, 9);
+  font-size: clamp(2rem, 2.3vw, 4rem);
+}
+h2 {
+
+  font-weight: bold;
+  color: rgb(39, 39, 39);
+  font-size: clamp(1.2rem, 2vw, 3rem);
+}
+h3 {
+  font-weight: bold;
+  color: rgb(47, 47, 47);
+  font-size: clamp(1.4rem, 2vw, 3rem);
+}
+section{
+    @apply container mx-auto mt-2 sm:mb-32 mb-16
+}
+
+.flex-center{
+    @apply flex justify-center items-center
+}
+.flex-between{
+    @apply flex justify-between items-center
+}
+
+.airtel_color{
+ color: red;
+}
+.robi_color{
+ color: rgb(255, 83, 83);
+}
+.grameenphone_color{
+ color: rgb(0, 149, 255);
+}
+.banglalink_color{
+ color: orange
+}
+.teletalk_color{
+ color: rgb(24, 255, 24);
+}
