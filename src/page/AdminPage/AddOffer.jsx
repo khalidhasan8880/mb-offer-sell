@@ -10,8 +10,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
 import api from "../../hooks/interceptors";
+import useAuth from "../../hooks/useAuth";
 
 const AddOffer = () => {
+  const {user} = useAuth()
   const [division, setDivision] = useState(null);
   const [selectedOperator, setSelectedOperator] = useState("");
   const [formErrors, setFormErrors] = useState({
@@ -57,9 +59,6 @@ const AddOffer = () => {
     if (!formData.price) {
       errors.price = true;
     }
-    if (!formData.note) {
-      errors.note = true;
-    }
     if (!selectedOperator) {
       errors.operator = true;
     }
@@ -78,7 +77,7 @@ const AddOffer = () => {
       };
 
       api
-        .post("/add-offer", postData)
+        .post(`/add-offer?email=${user?.email}`, postData)
         .then((res) => {
           console.log(res.data);
         })
