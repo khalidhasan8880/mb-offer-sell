@@ -1,25 +1,22 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
 import { Autocomplete, Box, Button } from "@mui/material";
-
+import Alert from '@mui/material/Alert';
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import MenuItem from "@mui/material/MenuItem";
 import api from "../../hooks/interceptors";
 import useAuth from "../../hooks/useAuth";
 
 const AddOffer = () => {
   const {user} = useAuth()
   const [division, setDivision] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(null);
   const [selectedOperator, setSelectedOperator] = useState("");
+  const [offerType, setOfferType] = useState("");
   const [formErrors, setFormErrors] = useState({
     offerName: false,
     price: false,
-    note: false,
     operator: false,
   });
 
@@ -41,6 +38,23 @@ const AddOffer = () => {
     note: "",
   });
 
+  const initialFormData = {
+    offerName: "",
+    price: "",
+    note: "",
+  };
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setSelectedOperator("");
+    setDivision(null);
+    setFormErrors({
+      offerName: false,
+      price: false,
+      note: false,
+      operator: false,
+    });
+    setAlertMessage(null);
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -62,6 +76,9 @@ const AddOffer = () => {
     if (!selectedOperator) {
       errors.operator = true;
     }
+    if (!offerType) {
+      errors.operator = true;
+    }
     if (!division) {
       errors.operator = true;
     }
@@ -71,7 +88,8 @@ const AddOffer = () => {
       const postData = {
         offerName: formData.offerName,
         operator: selectedOperator,
-        division: division ? division.name : null, // Assuming division is an object with a `name` property
+        division: division ? division.name : null,
+        offerType,
         price: formData.price,
         note: formData.note,
       };
@@ -80,9 +98,18 @@ const AddOffer = () => {
         .post(`/add-offer?email=${user?.email}`, postData)
         .then((res) => {
           console.log(res.data);
+          setAlertMessage(<Alert className="" severity="success">Successfully Added</Alert>);
+          setTimeout(() => {
+            setAlertMessage(null);
+          }, 4000);
+          resetForm()
         })
         .catch((error) => {
           console.error("Error:", error);
+          setAlertMessage(<Alert severity="error">Error.</Alert>);
+          setTimeout(() => {
+            setAlertMessage(null);
+          }, 4000);
         });
     } else {
       // Form is not valid, display error messages or handle errors as needed
@@ -92,7 +119,11 @@ const AddOffer = () => {
   };
 
   return (
-    <form className="p-4 space-y-4" onSubmit={handleSubmit}>
+    <section>
+     {alertMessage}
+      <form className="p-4 space-y-4" onSubmit={handleSubmit}>
+     
+
       <TextField
         required
         label="Offer Name"
@@ -105,7 +136,7 @@ const AddOffer = () => {
         helperText={formErrors.offerName && "Offer name is required"}
       />
 
-      <FormControl fullWidth variant="outlined">
+      {/* <FormControl fullWidth variant="outlined">
         <InputLabel id="operator-label">Select Operator</InputLabel>
         <Select
           labelId="operator-label"
@@ -120,7 +151,7 @@ const AddOffer = () => {
           <MenuItem value="robi">Robi</MenuItem>
           <MenuItem value="teletalk">Teletalk</MenuItem>
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       <RadioGroup
         row
@@ -137,9 +168,17 @@ const AddOffer = () => {
           label="Teletalk"
         />
       </RadioGroup>
+      <RadioGroup
+        row
+        name="operator"
+        value={offerType}
+        onChange={(e) => setOfferType(e.target.value)}>
+        <FormControlLabel value="internet" control={<Radio />} label="Internet" />
+        <FormControlLabel value="minute" control={<Radio />} label="Minute" />
+        <FormControlLabel value="combo" control={<Radio />} label="Combo" />    
+      </RadioGroup>
 
       <Autocomplete
-        id="country-select-demo"
         sx={{ width: 300 }}
         options={divisions}
         autoHighlight
@@ -158,7 +197,7 @@ const AddOffer = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Choose a country"
+            label="Choose a division"
             inputProps={{
               ...params.inputProps,
               autoComplete: "new-password", // disable autocomplete and autofill
@@ -195,7 +234,9 @@ const AddOffer = () => {
       <Button variant="contained" type="submit" color="primary">
         Submit
       </Button>
+
     </form>
+    </section>
   );
 };
 

@@ -15,6 +15,9 @@ const operators = [
 ];
 
 const SelectOperator = () => {
+
+  
+
   return (
     <section className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
       <h2 className="text-3xl mb-6 font-bold text-green-500">Choose Your Operator</h2>

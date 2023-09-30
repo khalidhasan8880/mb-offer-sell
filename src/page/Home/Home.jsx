@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <>
         {/* <Profile user={{name:'khalid hasan',  email:'khalidhasan9888@gmail.com'}}></Profile> */}
-            {/* <SelectOperator></SelectOperator> */}
+            <SelectOperator></SelectOperator>
         </>
     );
 };
