@@ -42,7 +42,11 @@ section{
     @apply flex justify-between items-center
 }
 
-
+.offer_card_title{
+  font-weight: bold;
+  color: rgb(47, 47, 47);
+  font-size: clamp(1.2rem, 1.7vw, 1.8rem);
+}
 
 .primary-text{
   color: #333;

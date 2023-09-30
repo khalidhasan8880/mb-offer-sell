@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import OfferCard from './OfferCard';
  function TabPanel({children, value, index }) {
  
 
@@ -46,13 +47,13 @@ export default function BasicTab({internet, minute, combo, className}) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {internet}
+        {internet?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {minute}
+        {minute?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {combo}
+        {combo?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
       </TabPanel>
     </Box>
   );
