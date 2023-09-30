@@ -1,21 +1,23 @@
-// import { useQuery } from "@tanstack/react-query"
-// import { useContext } from "react"
-// import { AuthContext } from "../../AuthProvider/AuthProvider"
-// import api from "./interceptors"
 
-// const useAdmin = ()=>{
-//     const {user, loading} = useContext(AuthContext)
+import { useContext, useEffect, useState } from "react";
+import api from "./interceptors";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
-//   const {data,isLoading:isAdminLoading}= useQuery({
-//     enabled:!!user?.email && !loading,
-//     queryKey:['demoaxios'],
-//     queryFn:async ()=> {
-//      const res = await api.post(`/isAdmin?email=${user?.email}`)
-//      return res?.data
-//     }
-//   })
-//   return {isAdmin: data?.isAdmin, isAdminLoading}
-  
-// }
 
-// export default useAdmin
+const useAdmin = () => {
+  const { user, loading } = useContext(AuthContext);
+  const [data, setData] = useState(null);
+  const [isAdminLoading, setIsAdminLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loading && !!localStorage.getItem('token')) {
+        api.post(`/isAdmin?email=${user?.email}`).then((res) => {
+            setData(res.data);
+            setIsAdminLoading(false)
+          });
+    }
+  }, [user, loading]);
+    return {isAdmin: data?.isAdmin, isAdminLoading}
+};
+
+export default useAdmin;

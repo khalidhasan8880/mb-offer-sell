@@ -12,6 +12,11 @@ import Home from "./page/Home/Home.jsx";
 import Reg from "./page/Login&Reg/Reg.jsx";
 import SignIn from "./page/Login&Reg/Login.jsx";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
+import AdminRoute from "./AdminRoute/AdminRoute.jsx";
+import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
+import AddOffer from "./page/AdminPage/AddOffer.jsx";
+import ManageUser from "./page/AdminPage/ManageUser.jsx";
+import UpdateOffer from "./page/AdminPage/UpdateOffer.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +53,23 @@ const router = createBrowserRouter([
       {
         path: "reg",
         element: <Reg></Reg>,
+      },
+      
+      {
+        path: "manage",
+        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
+        path: "manage/add_offer",
+        element: <AdminRoute><AddOffer></AddOffer></AdminRoute>
+      },
+      {
+        path: "manage/update-offer",
+        element: <AdminRoute><UpdateOffer></UpdateOffer></AdminRoute>
+      },
+      {
+        path: "manage/manage_user",
+        element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
       },
     ],
   },

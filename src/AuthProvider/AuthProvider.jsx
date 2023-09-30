@@ -60,10 +60,9 @@ const [loading, setLoading] = useState(true)
             body:JSON.stringify({email:currentUser?.email, name:currentUser?.displayName})
           })
            .then((res)=>res.json())
-           .then(data=>{
-            
+           .then(data=>{            
             localStorage.setItem('token', data?.token)
-           
+           setLoading(false)
             console.log(currentUser);
             if (!loading) {
               fetch(`http://localhost:5000/users?email=${currentUser?.email}&name=${currentUser?.displayName}`,{
