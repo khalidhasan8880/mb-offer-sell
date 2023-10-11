@@ -4,8 +4,10 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OfferCard from './OfferCard';
+import Modal from './Modal';
+
  function TabPanel({children, value, index }) {
- 
+
 
   return (
     <div
@@ -32,13 +34,28 @@ function a11yProps(index) {
 
 export default function BasicTab({internet, minute, combo, className}) {
   const [value, setValue] = useState(0);
+  const [selectedOfferId, setSelectedOfferId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedOfferId(null)
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+const handleBuyClick = (id)=>{
+  setSelectedOfferId(id)
+  openModal()
+}
   return (
-    <Box sx={{ width: '100%' }}>
+   <section>
+     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} className={`${className}` } onChange={handleChange} aria-label="basic tabs example">
           <Tab className={`bg-red-400`} label="Internet" {...a11yProps(0)} />
@@ -47,14 +64,17 @@ export default function BasicTab({internet, minute, combo, className}) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {internet?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
+        {internet?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {minute?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
+        {minute?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {combo?.map(offer => <OfferCard key={offer?._id} offer={offer}></OfferCard>)}
+        {combo?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
       </TabPanel>
     </Box>
+
+<Modal isModalOpen={isModalOpen} closeModal={closeModal} selectedOfferId={selectedOfferId}></Modal>
+   </section>
   );
 }

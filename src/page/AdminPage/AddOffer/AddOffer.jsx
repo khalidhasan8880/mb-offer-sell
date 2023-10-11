@@ -5,8 +5,8 @@ import Alert from '@mui/material/Alert';
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import api from "../../hooks/interceptors";
-import useAuth from "../../hooks/useAuth";
+import api from "../../../hooks/interceptors";
+import useAuth from "../../../hooks/useAuth";
 
 const AddOffer = () => {
   const {user} = useAuth()

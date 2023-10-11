@@ -9,7 +9,7 @@ function App() {
 <>
 
     <Outlet></Outlet>
-      {/* <BottomNav></BottomNav> */}
+      <BottomNav></BottomNav>
   </>
   )
 }

@@ -11,7 +11,7 @@ const Banglalink = () => {
 useEffect(()=>{
     api.get(`/offer/bl?email=${user?.email}`)
     .then(res=>{
-        setBanglalinkOffers(res.data)
+        setBanglalinkOffers(res?.data)
         setLoading(false)
     })
 },[user])

@@ -1,29 +1,53 @@
-import { Link } from "react-router-dom";
+
+import { Card, CardContent, Typography, Grid } from '@mui/material';
+import 'tailwindcss/tailwind.css';
 
 const AdminHome = () => {
-    return (
-        <section>
-             <div className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-     
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-screen-lg">
-      <Link
-      to='/manage/manage_user'
-            className="bg-white p-4 rounded-md shadow-sm hover:shadow-md transform hover:scale-105 transition duration-300 ease-in-out flex flex-col items-center"
-          >
-           
-            <span className="text-sm font-semibold text-gray-700">Manage user</span>
-          </Link>
-      <Link
-        to='/manage/add_offer'
-            className="bg-white p-4 rounded-md shadow-sm hover:shadow-md transform hover:scale-105 transition duration-300 ease-in-out flex flex-col items-center"
-          >
-           
-            <span className="text-sm font-semibold text-gray-700">Add Offer</span>
-          </Link>
-      </div>
+  return (
+    <div className="container mx-auto p-4">
+      <Grid container spacing={3}>
+        {/* Statistics Card 1 */}
+        <Grid item xs={12} sm={6} md={3}>
+          <Card className="bg-blue-500 text-white">
+            <CardContent>
+              <Typography variant="h6">Total Users</Typography>
+              <Typography variant="h4">1,234</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Statistics Card 2 */}
+        <Grid item xs={12} sm={6} md={3}>
+          <Card className="bg-green-500 text-white">
+            <CardContent>
+              <Typography variant="h6">Active Users</Typography>
+              <Typography variant="h4">789</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Statistics Card 3 */}
+        <Grid item xs={12} sm={6} md={3}>
+          <Card className="bg-orange-500 text-white">
+            <CardContent>
+              <Typography variant="h6">Revenue</Typography>
+              <Typography variant="h4">$50,000</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Statistics Card 4 */}
+        <Grid item xs={12} sm={6} md={3}>
+          <Card className="bg-red-500 text-white">
+            <CardContent>
+              <Typography variant="h6">New Orders</Typography>
+              <Typography variant="h4">200</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
-        </section>
-    );
+  );
 };
 
 export default AdminHome;

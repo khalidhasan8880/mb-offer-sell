@@ -1,7 +1,7 @@
 
 const Loading = () => {
     return (
-        <div className=" fixed-center flex items-center space-x-2">
+        <div className=" fixed-center z-50 flex items-center space-x-2">
   <div aria-label="Loading..." role="status">
     <svg
       className="animate-spin w-4 h-4 stroke-slate-500"

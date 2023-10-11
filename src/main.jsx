@@ -13,10 +13,10 @@ import Reg from "./page/Login&Reg/Reg.jsx";
 import SignIn from "./page/Login&Reg/Login.jsx";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
 import AdminRoute from "./AdminRoute/AdminRoute.jsx";
+import ManageOffer from "./page/AdminPage/ManageOffer/ManageOffer.jsx";
+import AdminDashboard from "./page/AdminPage/AdminDashboard.jsx";
 import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
-import AddOffer from "./page/AdminPage/AddOffer.jsx";
-import ManageUser from "./page/AdminPage/ManageUser.jsx";
-import UpdateOffer from "./page/AdminPage/UpdateOffer.jsx";
+import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,25 +54,42 @@ const router = createBrowserRouter([
         path: "reg",
         element: <Reg></Reg>,
       },
-      
-      {
-        path: "manage",
-        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
-      },
-      {
-        path: "manage/add_offer",
-        element: <AdminRoute><AddOffer></AddOffer></AdminRoute>
-      },
-      {
-        path: "manage/update-offer",
-        element: <AdminRoute><UpdateOffer></UpdateOffer></AdminRoute>
-      },
-      {
-        path: "manage/manage_user",
-        element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
-      },
     ],
   },
+  {
+    path:'admin_dashboard',
+    element:<AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
+    children:[
+      {
+        path:'home', 
+        element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
+        path:'offers', 
+        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
+      },
+      {
+        path:'add_offer', 
+      element:<AdminRoute><AddOffer></AddOffer></AdminRoute>
+      },
+      {
+        path:'offer/airtel', 
+        element:<AdminRoute></AdminRoute>
+      },
+      {
+        path:'offer/robi', 
+        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
+      },
+      {
+        path:'offer/airtel', 
+        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
+      },
+      {
+        path:'offer/airtel', 
+        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
+      },
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
