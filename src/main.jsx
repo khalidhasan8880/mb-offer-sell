@@ -17,6 +17,7 @@ import ManageOffer from "./page/AdminPage/ManageOffer/ManageOffer.jsx";
 import AdminDashboard from "./page/AdminPage/AdminDashboard.jsx";
 import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
 import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
+import ManageUser from "./page/AdminPage/ManageUser/ManageUser.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -61,8 +62,12 @@ const router = createBrowserRouter([
     element:<AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
     children:[
       {
-        path:'home', 
+        path:'admin_home', 
         element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
+        path:'manage_users', 
+        element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
       },
       {
         path:'offers', 

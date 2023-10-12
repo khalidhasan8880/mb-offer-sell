@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../../hooks/interceptors';
+import Loading from '../../../components/Loading';
 
 const ManageUser = () => {
+    const [users, setUsers] = useState([])
+    const [getUserLoading, setGetUserLoading] = useState(true)
+    useEffect(()=>{
+        api.get('users')
+        .then(res=> {
+            
+            setUsers(res?.data)
+            setGetUserLoading(false)
+        })
+
+    }, [])
+    if (getUserLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div>
-            
+            all users
         </div>
     );
 };

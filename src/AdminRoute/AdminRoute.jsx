@@ -8,7 +8,6 @@ import Loading from "../components/Loading";
 const AdminRoute = ({children}) => {
     const {user, loading} = useAuth()
     const {isAdmin} = useAdmin()
-    console.log(isAdmin);
    if (loading) {
     return <Loading></Loading>
    }

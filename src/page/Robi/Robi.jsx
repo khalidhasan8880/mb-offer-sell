@@ -22,7 +22,6 @@ const Robi = () => {
   if (loading) {
     return <Loading></Loading>;
   }
-  console.log(robiOffers);
   return (
     <BasicTab minute={minute} internet={internet} combo={combo}></BasicTab>
   );

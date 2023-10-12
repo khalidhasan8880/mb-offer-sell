@@ -39,12 +39,9 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email')
     const password = data.get('password')
-  console.log(email,password);
     logIn(email, password)
-    .then(res=>{
-      console.log(res);
-    }).catch(err=>{
-      console.log(err);
+    .then(()=>{
+    }).catch(()=>{
     })
   };
 

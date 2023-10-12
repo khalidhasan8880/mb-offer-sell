@@ -63,7 +63,6 @@ const [loading, setLoading] = useState(true)
            .then(data=>{
             localStorage.setItem('token', data?.token)
            
-            console.log(currentUser);
             if (!loading) {
               fetch(`http://localhost:5000/users?email=${currentUser?.email}&name=${currentUser?.displayName}`,{
                 method:"POST",

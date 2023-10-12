@@ -22,7 +22,6 @@ const [loading, setLoading] = useState(true)
   setLoading(true)
   return createUserWithEmailAndPassword(auth, email, password)
  }
- console.log(user);
 
   const logIn = (email, password) => {
       setLoading(true)
@@ -62,8 +61,7 @@ const [loading, setLoading] = useState(true)
            .then((res)=>res.json())
            .then(data=>{            
             localStorage.setItem('token', data?.token)
-           setLoading(false)
-            console.log(currentUser);
+           setLoading(false);
             if (!loading) {
               fetch(`http://localhost:5000/users?email=${currentUser?.email}&name=${currentUser?.displayName}`,{
                 method:"POST",

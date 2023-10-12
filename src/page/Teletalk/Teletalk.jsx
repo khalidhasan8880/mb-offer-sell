@@ -11,7 +11,6 @@ const Teletalk = () => {
 useEffect(()=>{
     api.get(`/offer/teletalk?email=${user?.email}`)
     .then(res=>{
-        console.log(res.data);
         setTeletalkOffers(res.data)
         setLoading(false)
     })

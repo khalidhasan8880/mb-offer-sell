@@ -51,12 +51,7 @@ const UpdateOffer = ({ offerId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate form data here (e.g., check if required fields are filled)
-
-    // If valid, you can proceed with form submission or further actions
-    console.log('Form Data:', formData);
-    console.log('Selected Operator:', selectedOperator);
-    console.log('Selected Division:', division);
+    
   };
 
   return (

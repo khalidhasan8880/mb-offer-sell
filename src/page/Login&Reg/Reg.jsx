@@ -36,7 +36,6 @@ export default function Reg() {
     const name = data.get('name')
     const email = data.get('email')
     const password = data.get('password')
-    console.log(email, password);
     createUser(email, password)
     .then(()=>{
       updateUser(name)

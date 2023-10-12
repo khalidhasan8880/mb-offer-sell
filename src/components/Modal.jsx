@@ -20,7 +20,6 @@ React.useEffect(()=>{
       setLoading(true)
         api.get(`/get-single-offer/${selectedOfferId}?email=${user?.email}`)
     .then(res=>{
-        console.log(res.data);
         setOffer(res.data)
         setLoading(false)
     })
@@ -45,9 +44,7 @@ if (!isValidBangladeshPhoneNumber(phoneNumber)) {
 if (!paymentMethod) {
   return alert('select a payment method')
 }
-  // Handle the collected data as needed, e.g., send it to an API.
-  console.log("Phone Number:", phoneNumber);
-  console.log("Payment Method:", paymentMethod);
+
 };
 if (loading) {
   return <Loading></Loading>

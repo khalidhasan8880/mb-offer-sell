@@ -22,7 +22,6 @@ const combo = banglalinkOffers?.filter(offer=> offer?.offerType === 'combo')
 if (loading) {
     return <Loading></Loading>
 }
-console.log(banglalinkOffers);
   return (
     <BasicTab minute={minute} internet={internet} combo={combo}></BasicTab>
   )
