@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+
 import robi from '../../../assets/robi.png';
 import airtel from '../../../assets/airtel.png';
 import teletalk from '../../../assets/teletalk.png';
@@ -20,7 +21,7 @@ const SelectOperator = () => {
 
   return (
     <section className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-      <h2 className="text-3xl mb-6 font-bold text-green-500">Choose Your Operator</h2>
+      <h2 className="text-3xl mb-6 font-bold text-green-500">Choose Your Operator </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-screen-lg">
         {operators.map((operator, index) => (
           <Link

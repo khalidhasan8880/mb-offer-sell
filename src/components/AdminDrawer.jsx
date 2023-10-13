@@ -1,4 +1,4 @@
-import React from "react";
+
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
@@ -7,10 +7,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useLocation } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { Fragment, useState } from "react";
 
 const AdminDrawer = () => {
-  const [state, setState] = React.useState(false);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [state, setState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const toggleDrawer = (open) => (event) => {
@@ -46,10 +47,12 @@ const AdminDrawer = () => {
         </NavLink>
 
         <NavLink
-          to={`/admin_dashboard/users`}
-          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${(
-            isActive
-          ) => (isActive ? "text-green-400" : "")}`}>
+          to={`/admin_dashboard/manage_users`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/admin_dashboard/manage_users")
+              ? "text-green-400"
+              : ""
+          }`}>
           Manage Users
         </NavLink>
 
@@ -92,7 +95,7 @@ const AdminDrawer = () => {
 
   return (
     <div>
-      <React.Fragment key={"left"}>
+      <Fragment key={"left"}>
         <Button onClick={toggleDrawer(true)}>
           <MenuIcon />
         </Button>
@@ -108,7 +111,7 @@ const AdminDrawer = () => {
           </div>
           {list()}
         </SwipeableDrawer>
-      </React.Fragment>
+      </Fragment>
     </div>
   );
 };

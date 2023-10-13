@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../../hooks/interceptors';
 import Loading from '../../../components/Loading';
+import ResponsiveTable from '../../../components/ResponsiveTable';
 
 const ManageUser = () => {
-    const [users, setUsers] = useState([])
+    const [ users ,setUsers] = useState([])
     const [getUserLoading, setGetUserLoading] = useState(true)
     useEffect(()=>{
         api.get('users')
@@ -14,17 +15,25 @@ const ManageUser = () => {
         })
 
     }, [])
-    if (getUserLoading) {
+    console.log(users);
+    if (getUserLoading ) {
         return <Loading></Loading>
     }
     return (
-        <div>
-            all users
-        </div>
+        <section>
+          <ResponsiveTable></ResponsiveTable>
+        </section>
     );
 };
 
 export default ManageUser;
+
+
+
+
+
+
+
 
 
 

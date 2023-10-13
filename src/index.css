@@ -6,6 +6,7 @@
 
 body {
   font-family: 'Raleway', sans-serif;
+  @apply px-2
 }
 h1{
   font-weight: bolder;
@@ -78,4 +79,32 @@ section{
 }
 .teletalk_color{
  color: rgb(24, 255, 24);
+}
+
+/* SimpleSlider.css */
+.custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: center;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #4CAF50;
+  transition: width 3s ease;
+}
+
+.custom-button:active::after {
+  width: 100%;
 }
