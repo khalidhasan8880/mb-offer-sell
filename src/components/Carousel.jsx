@@ -1,4 +1,4 @@
-import  { useState } from "react";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,15 +14,12 @@ const Carousel = ({children, sliderRef}) => {
   };
 
   return (
-    <>
-      <Slider ref={sliderRef} {...settings} className="container mx-auto p-4 relative max-w-md">
+    <Slider ref={sliderRef} {...settings}>
                
         {
             children
         }
       </Slider>
-
-    </>
   );
 };
 

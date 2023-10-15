@@ -18,6 +18,7 @@ import AdminDashboard from "./page/AdminPage/AdminDashboard.jsx";
 import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
 import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
 import ManageUser from "./page/AdminPage/ManageUser/ManageUser.jsx";
+import BuyOffer from "./page/BuyOffer/BuyOffer.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,21 +33,45 @@ const router = createBrowserRouter([
         element: <Airtel></Airtel>,
       },
       {
+        path: "airtel/buy/:offerId",
+        element:<BuyOffer></BuyOffer>,
+      },
+      {
         path: "robi",
         element: <Robi></Robi>,
+      },
+      {
+        path: "robi/buy/:offerId",
+        element:<BuyOffer></BuyOffer>,
       },
       {
         path: "grameenphone",
         element: <GrameenPhone></GrameenPhone>,
       },
       {
+        path: "grameenphone/buy/:offerId",
+        element:<BuyOffer></BuyOffer>,
+      },
+      {
         path: "banglalink",
         element: <Banglalink></Banglalink>,
+      },
+      {
+        path: "banglalink/buy/:offerId",
+        element:<BuyOffer></BuyOffer>,
       },
       {
         path: "teletalk",
         element: <Teletalk></Teletalk>,
       },
+      {
+        path: "teletalk/buy/:offerId",
+        element:<BuyOffer></BuyOffer>,
+      },
+      // {
+      //   path: "buy/:offerId",
+      //   element: <BuyOffer></BuyOffer>
+      // },
       {
         path: "login",
         element: <SignIn></SignIn>,
