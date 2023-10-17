@@ -9,21 +9,23 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Modal({ isModalOpen, closeModal,}) {
+export default function Modal({ isModalOpen, handleCancel, children}) {
 
   return (
     <div className="">
       <Dialog
         fullScreen
         open={isModalOpen}
-        onClose={closeModal}
+        onClose={handleCancel}
         TransitionComponent={Transition}>
         <CloseIcon
           className="ms-auto mt-3 mr-3 cursor-pointer"
-          onClick={closeModal}
+          onClick={handleCancel}
         />
 
-      modal
+      {
+        children
+      }
       </Dialog>
     </div>
   );

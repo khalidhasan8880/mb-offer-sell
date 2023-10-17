@@ -4,32 +4,19 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Autocomplete, Box, Button } from '@mui/material';
+import { Autocomplete, Box, Button, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import axios from 'axios';
 
-const UpdateOffer = ({ offerId }) => {
-  const [division, setDivision] = useState(null);
-  const [selectedOperator, setSelectedOperator] = useState('');
+const UpdateOffer = ({ offer, handleCancel }) => {
+  const [division, setDivision] = useState(offer?.division);
+  const [offerType, setOfferType] = useState(offer?.offerType);
+  const [selectedOperator, setSelectedOperator] = useState(offer?.selectedOperator);
   const [formData, setFormData] = useState({
-    offerName: '',
-    price: '',
-    note: ''
+    offerName: offer?.offerName,
+    price: offer?.price,
+    note: offer?.note,
   });
-
-  useEffect(() => {
-    // Fetch offer data based on offerId when the component mounts
-    axios.get(`/get-offer/${offerId}`)
-      .then(response => {
-        const { offerName, operator, division, price, note } = response.data;
-        // Set fetched data as default values for the form fields
-        setFormData({ offerName, price, note });
-        setSelectedOperator(operator);
-        setDivision(division);
-      })
-      .catch(error => {
-        console.error('Error fetching offer data:', error);
-      });
-  }, [offerId]); // Trigger the effect whenever offerId changes
+ 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +49,7 @@ const UpdateOffer = ({ offerId }) => {
         variant="outlined"
         fullWidth
         name="offerName"
+       
         value={formData.offerName}
         onChange={handleInputChange}
       />
@@ -83,6 +71,15 @@ const UpdateOffer = ({ offerId }) => {
           <MenuItem value="teletalk">Teletalk</MenuItem>
         </Select>
       </FormControl>
+      <RadioGroup
+        row
+        name="operator"
+        value={offerType}
+        onChange={(e) => setOfferType(e.target.value)}>
+        <FormControlLabel value="internet" control={<Radio />} label="Internet" />
+        <FormControlLabel value="minute" control={<Radio />} label="Minute" />
+        <FormControlLabel value="combo" control={<Radio />} label="Combo" />    
+      </RadioGroup>
       <Autocomplete
   id="country-select-demo"
   sx={{ width: 300 }}
@@ -104,7 +101,7 @@ const UpdateOffer = ({ offerId }) => {
       label="Choose a country"
       inputProps={{
         ...params.inputProps,
-        autoComplete: 'new-password', // disable autocomplete and autofill
+        autoComplete: 'new-password', 
       }}
     />
   )}

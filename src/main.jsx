@@ -95,7 +95,7 @@ const router = createBrowserRouter([
         element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
       },
       {
-        path:'offers', 
+        path:'manage_offers', 
         element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
       },
       {

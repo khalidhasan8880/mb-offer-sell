@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 import api from '../../../hooks/interceptors';
 import Loading from '../../../components/Loading';
-import ResponsiveTable from '../../../components/ResponsiveTable';
+import {
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 
 const ManageUser = () => {
     const [ users ,setUsers] = useState([])
     const [getUserLoading, setGetUserLoading] = useState(true)
+
     useEffect(()=>{
         api.get('users')
         .then(res=> {
@@ -15,141 +27,107 @@ const ManageUser = () => {
         })
 
     }, [])
-    console.log(users);
+
+    const [viewDetails, setViewDetails] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+  
+  
+    const handleDelete = (id, row) => {
+      setViewDetails(row);
+      setIsAlertOpen(true);
+    };
+  
+    const handleEdit = (row) => {
+      setViewDetails(row)
+      setIsModalOpen(true);
+    };
+  
+    const handleAlertConfirm = () => {
+      console.log("hello");
+      // Perform deletion using Axios (replace the following line with your actual delete request)
+      // axios.delete(`/api/items/${viewDetails.id}`)
+      //   .then(response => {
+      //     console.log('Item deleted successfully.');
+      //   })
+      //   .catch(error => {
+      //     console.error('Error deleting item:', error);
+      //   });
+  
+      // Close the alert and modal after successful deletion
+      setIsAlertOpen(false);
+      setIsModalOpen(false);
+    };
+  
+    const handleAlertCancel = () => {
+      // Close the alert
+      setIsAlertOpen(false);
+    };
+  
     if (getUserLoading ) {
         return <Loading></Loading>
     }
     return (
         <section>
-          <ResponsiveTable></ResponsiveTable>
+          {/* <div className="container mx-auto py-8">
+      <TableContainer component={Paper} className="shadow-lg">
+        <Table className="min-w-full table-fixed">
+          <TableHead className="bg-orange-100 text-white">
+            <TableRow>
+              <TableCell className="w-1/4 font-bold">Name</TableCell>
+              <TableCell className="w-1/4 font-bold">Description</TableCell>
+              <TableCell className="w-1/4 font-bold text-right">
+                Price
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {users?.map((row) => (
+              <TableRow key={row.id} className="bg-gray-100 hover:bg-green-200">
+                <TableCell className="font-extralight text-xs">
+                  {row.name}
+                </TableCell>
+                <TableCell className="font-extralight text-xs">
+                  {row.description}
+                </TableCell>
+                <TableCell className="font-extralight text-xs text-right">
+                  ${row.price}
+                </TableCell>
+                <TableCell className="font-extralight text-xs ">
+                  <div className="flex gap-5">
+                    <button onClick={handleEdit}>
+                      <EditIcon></EditIcon>
+                    </button>
+                    <button onClick={handleDelete}>
+                      <DeleteIcon></DeleteIcon>
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      </TableContainer>
+
+      <AlertModal
+        open={isAlertOpen}
+        severity="warning"
+        title="Are you sure you want to delete this item?"
+        description=" Deleting this item is irreversible. Once deleted, you cannot retrieve it.">
+        <Button onClick={handleAlertConfirm} color="secondary" size="small">
+          Yes
+        </Button>
+        <Button onClick={handleAlertCancel} color="primary" size="small">
+          No
+        </Button>
+      </AlertModal>
+
+      <Modal isModalOpen={isModalOpen}>
+        <UpdateOffer offer={offer}></UpdateOffer>
+      </Modal>
+    </div> */}
         </section>
     );
 };
 
 export default ManageUser;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import  { useState } from 'react';
-// import TextField from '@mui/material/TextField';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import InputLabel from '@mui/material/InputLabel';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
-// import { Autocomplete, Box , Button } from '@mui/material';
-
-// const AddOffer = () => {
-//   const [division, setDivision] = useState(null);
-//   const [selectedOperator, setSelectedOperator] = useState('');
-
-//   const divisions = [
-//     { name: 'All Division' },
-//     { name: 'Dhaka' },
-//     { name: 'Chattogram' },
-//     { name: 'Rajshahi' },
-//     { name: 'Khulna' },
-//     { name: 'Barishal' },
-//     { name: 'Sylhet' },
-//     { name: 'Rangpur' },
-//     { name: 'Mymensingh' }
-//   ];
-
-//   const [formData, setFormData] = useState({
-//     offerName: '',
-//     price: '',
-//     note: ''
-//   });
-
-//   const handleInputChange = (e) => {
-//     if (!division && selectedOperator === '') {
-//       return alert('fill all')
-//     }
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-
-//     console.log(formData);
-//     console.log(division);
-//   };
-
-//   return (
-//     <form className="p-4 space-y-4">
-//       <TextField
-//         required
-//         label="Offer Name"
-//         variant="outlined"
-//         fullWidth
-//         name="offerName"
-//         value={formData.offerName}
-//         onChange={handleInputChange}
-//       />
-      
-
-
-//       <Autocomplete
-//         id="country-select-demo"
-//         sx={{ width: 300 }}
-//         options={divisions}
-//         autoHighlight
-//         getOptionLabel={(option) => option.name}
-//         onChange={(event, newValue) => {
-//           setDivision(newValue);
-//         }}
-//         renderOption={(props, option) => (
-//           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-//             {option?.name}
-//           </Box>
-//         )}
-//         renderInput={(params) => (
-//           <TextField
-//             {...params}
-//             label="Choose a country"
-//             inputProps={{
-//               ...params.inputProps,
-//               autoComplete: 'new-password', // disable autocomplete and autofill
-//             }}
-//           />
-//         )}
-//       />
-
-//       <TextField
-//         label="Price"
-//         variant="outlined"
-//         fullWidth
-//         name="price"
-//         value={formData.price}
-//         onChange={handleInputChange}
-//       />
-//       <TextField
-//         label="Note"
-//         variant="outlined"
-//         fullWidth
-//         name="note"
-//         multiline
-//         rows={4}
-//         value={formData.note}
-//         onChange={handleInputChange}
-//       />
-
-// <Button variant="contained" type="submit" color="primary">
-//         Submit
-//       </Button>
-//     </form>
-//   );
-// };
-
-// export default AddOffer;

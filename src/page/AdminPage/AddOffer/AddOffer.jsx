@@ -11,9 +11,9 @@ import useAuth from "../../../hooks/useAuth";
 const AddOffer = () => {
   const {user} = useAuth()
   const [division, setDivision] = useState(null);
+  const [offerType, setOfferType] = useState("");
   const [alertMessage, setAlertMessage] = useState(null);
   const [selectedOperator, setSelectedOperator] = useState("");
-  const [offerType, setOfferType] = useState("");
   const [formErrors, setFormErrors] = useState({
     offerName: false,
     price: false,
@@ -136,30 +136,15 @@ const AddOffer = () => {
         helperText={formErrors.offerName && "Offer name is required"}
       />
 
-      {/* <FormControl fullWidth variant="outlined">
-        <InputLabel id="operator-label">Select Operator</InputLabel>
-        <Select
-          labelId="operator-label"
-          id="operator"
-          label="Select Operator"
-          value={selectedOperator}
-          onChange={(e) => setSelectedOperator(e.target.value)}>
-          <MenuItem value="">Select an operator</MenuItem>
-          <MenuItem value="gp">GP</MenuItem>
-          <MenuItem value="bl">BL</MenuItem>
-          <MenuItem value="airtel">Airtel</MenuItem>
-          <MenuItem value="robi">Robi</MenuItem>
-          <MenuItem value="teletalk">Teletalk</MenuItem>
-        </Select>
-      </FormControl> */}
+ 
 
       <RadioGroup
         row
         name="operator"
         value={selectedOperator}
         onChange={(e) => setSelectedOperator(e.target.value)}>
-        <FormControlLabel value="gp" control={<Radio />} label="GP" />
-        <FormControlLabel value="bl" control={<Radio />} label="BL" />
+        <FormControlLabel value="grameenphone" control={<Radio />} label="Grameenphone" />
+        <FormControlLabel value="banglalink" control={<Radio />} label="Banglalink" />
         <FormControlLabel value="airtel" control={<Radio />} label="Airtel" />
         <FormControlLabel value="robi" control={<Radio />} label="Robi" />
         <FormControlLabel
