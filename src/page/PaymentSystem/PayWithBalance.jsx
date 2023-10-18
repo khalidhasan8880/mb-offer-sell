@@ -1,14 +1,18 @@
 
+import { useState } from "react";
 import api from "../../hooks/interceptors";
 import useAuth from "../../hooks/useAuth";
+import ErrorModal from "../../components/ErrorModal";
 
 const PayWithBalance = ({ offer, formData,nextSlide }) => {
   const { user } = useAuth();
-  const handleFormSubmit = () => {
+  const [error, setError] = useState(null); 
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleFormSubmit = async () => {
     const { offerName, price, operator, offerType, _id } = offer;
-console.log('hello');
-    api
-      .post(`payment/pay-with-balance?email=${user?.email}`, {
+    await api
+      .post(`/payment/pay-with-balance?email=${user?.email}`, {
         ...formData,
         userEmail: user?.email,
         offerName,
@@ -16,17 +20,35 @@ console.log('hello');
         offerId: _id,
         operator,
         price,
+        status:"pending",
         paymentSystem: "pay with balance",
         date: new Date().toISOString(),
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res?.data);
+        
+        if (res.response?.data?.error && res.response?.data?.message === "You don't have enough balance") {
+          setError({ error: true, message: "You don't have enough balance" });
+          setErrorModalOpen(true);
+          return 
+        }
         nextSlide()
       })
       .catch((error) => {
-        console.error("Error sending data:", error);
+        if (error.response?.data?.error && error.response?.data?.message === "You don't have enough balance") {
+          setError({ error: true, message: "You don't have enough balance" });
+          setErrorModalOpen(true);
+        } else {
+          setError({ error: true, message: "An error occurred. Please try again later." });
+          setErrorModalOpen(true);
+        }
       });
   };
+  const handleCloseErrorModal = () => {
+    setErrorModalOpen(false); 
+    setError(null); 
+  };
+
   return (
     <section>
      <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md mt-10">
@@ -58,6 +80,7 @@ console.log('hello');
   </button>
 </div>
 
+<ErrorModal open={errorModalOpen} onClose={handleCloseErrorModal} error={error} />
     </section>
   );
 };

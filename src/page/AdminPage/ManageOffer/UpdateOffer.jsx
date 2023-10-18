@@ -1,22 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Autocomplete, Box, Button, FormControlLabel, Radio, RadioGroup } from '@mui/material';
-import axios from 'axios';
+import api from '../../../hooks/interceptors';
+import useAuth from '../../../hooks/useAuth';
 
-const UpdateOffer = ({ offer, handleCancel }) => {
-  const [division, setDivision] = useState(offer?.division);
-  const [offerType, setOfferType] = useState(offer?.offerType);
-  const [selectedOperator, setSelectedOperator] = useState(offer?.selectedOperator);
+const UpdateOffer = ({ offer }) => {
+  const [division, setDivision] = useState('');
+  const [offerType, setOfferType] = useState('');
+  const [selectedOperator, setSelectedOperator] = useState('');
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    offerName: offer?.offerName,
-    price: offer?.price,
-    note: offer?.note,
+    offerName: '',
+    price: '',
+    note: '',
   });
- 
+
+  useEffect(() => {
+    if (offer) {
+      setDivision(offer.division || ''); 
+      setOfferType(offer.offerType || ''); 
+      setSelectedOperator(offer.operator || ''); 
+      setFormData({
+        offerName: offer.offerName || '', 
+        price: offer.price || '', 
+        note: offer.note || '', 
+      });
+    }
+  }, [offer]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,13 +49,27 @@ const UpdateOffer = ({ offer, handleCancel }) => {
     { name: "Rangpur" },
     { name: "Mymensingh" },
   ];
-
-  const handleSubmit = (e) => {
+console.log(offer);
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-  };
+    try {
+      await api.put(`/update-offer/${offer?._id}?email=${user?.email}`, {
+        division,
+        offerName: formData.offerName || '',
+        offerType: offerType || '', 
+        operator: selectedOperator || '',
+        price: formData.price || '', 
+        note: formData.note || '', 
+      }).then(res=>{
+        console.log(res);
+      })
 
+    } catch (error) {
+      console.error('Error updating offer:', error);
+    }
+  };
+  console.log(divisions.find(d=> d.name === division));
   return (
     <form className="p-4 space-y-4" onSubmit={handleSubmit}>
       <TextField
@@ -86,9 +115,10 @@ const UpdateOffer = ({ offer, handleCancel }) => {
   options={divisions}
   autoHighlight
   getOptionLabel={(option) => option.name}
-  value={division}
+  value={divisions.find((item) => item.name === division) || null}
+  
   onChange={(event, newValue) => {
-    setDivision(newValue);
+    setDivision(newValue ? newValue.name : ''); // Handle undefined case here
   }}
   renderOption={(props, option) => (
     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -101,11 +131,12 @@ const UpdateOffer = ({ offer, handleCancel }) => {
       label="Choose a country"
       inputProps={{
         ...params.inputProps,
-        autoComplete: 'new-password', 
+        autoComplete: 'new-password',
       }}
     />
   )}
 />
+
 
 <TextField
   required
@@ -113,18 +144,19 @@ const UpdateOffer = ({ offer, handleCancel }) => {
   variant="outlined"
   fullWidth
   name="price"
+  defaultValue={offer?.price}
   value={formData.price}
   onChange={handleInputChange}
 />
 
 <TextField
-  required
   label="Note"
   variant="outlined"
   fullWidth
   name="note"
   multiline
   rows={4}
+  defaultValue={offer?.note}
   value={formData.note}
   onChange={handleInputChange}
 />

@@ -19,6 +19,7 @@ import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
 import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
 import ManageUser from "./page/AdminPage/ManageUser/ManageUser.jsx";
 import BuyOffer from "./page/BuyOffer/BuyOffer.jsx";
+import Orders from "./page/AdminPage/Orders.jsx/Orders.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       {
         path:'admin_home', 
         element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
+        path:'orders', 
+        element:<AdminRoute><Orders></Orders></AdminRoute>
       },
       {
         path:'manage_users', 

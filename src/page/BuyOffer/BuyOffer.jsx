@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../../hooks/interceptors";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
@@ -27,7 +27,6 @@ const BuyOffer = () => {
     paymentMethod: "",
   });
   const [errorMassage, setErrorMassage] = useState({});
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -86,12 +85,14 @@ const BuyOffer = () => {
     nextSlide();
   };
 
+  
+
   if (loading) {
     return <Loading></Loading>;
   }
   return (
-    <section>
-      <Carousel sliderRef={sliderRef} >
+    <section className="">
+      <Carousel sliderRef={sliderRef}  className="">
       <div className="max-w-2xl mx-auto">
           <h2 className="font-semibold text-gray-800 text-2xl my-2">
             {offer?.offerName}
@@ -219,6 +220,15 @@ const BuyOffer = () => {
               nextSlide={nextSlide}></SendMoney>
           )}
         </div>
+        <div className="flex flex-col items-center justify-center text-center gap-8 p-8 bg-gray-100 rounded-lg shadow-lg">
+    <h3 className="font-bold text-center mb-4">🎉 Congratulations! 🥳</h3>
+    <p className="text-lg text-center mb-8">You will receive {offer?.offerName}  very soon.<br /> We handle or process it manually .Please wait for next 5-30 minutes to complete. Thank you! 🌟</p>
+    <Link to='/' className="w-full bg-green-500  hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center ">
+         Ok 
+    </Link>
+</div>
+
+
       </Carousel>
     </section>
   );

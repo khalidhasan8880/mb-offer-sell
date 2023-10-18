@@ -3,9 +3,13 @@ import { useState } from "react";
 import CopyToClipboard from "../../components/CopyClipboard";
 import api from "../../hooks/interceptors";
 import useAuth from "../../hooks/useAuth";
+import ErrorModal from "../../components/ErrorModal";
 
 const SendMoney = ({ offer, formData, nextSlide }) => {
   const { user } = useAuth();
+  const [error, setError] = useState(null); 
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
   const [sendMoneyFormData, setSendMoneyFormData] = useState({
     amount: "",
     transactionId: "",
@@ -46,19 +50,24 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
         offerId: _id,
         operator,
         price,
+        status:"pending",
         paymentSystem: "send money",
         date: new Date().toISOString(),
       })
       .then((res) => {
         console.log(res.data);
-        alert("Long tap detected!");
+        
         nextSlide()
       })
-      .catch((error) => {
-        console.error("Error sending data:", error);
+      .catch(() => {
+        setError({ error: true, message: "An error occurred. Please try again later." });
+        setErrorModalOpen(true);
       });
   };
-
+  const handleCloseErrorModal = () => {
+    setErrorModalOpen(false); 
+    setError(null); 
+  };
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
       <div className="flex gap-2 items-center mt-3">
@@ -124,6 +133,7 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
     Confirm
   </button>
       </div>
+      <ErrorModal open={errorModalOpen} onClose={handleCloseErrorModal} error={error} />
     </div>
   );
 };

@@ -16,11 +16,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from "@mui/icons-material/Edit";
 import AlertModal from '../../../components/AlertModal';
 import Modal from '../../../components/Modal';
-import UpdateOffer from './UpdateOffer';
 import useAuth from '../../../hooks/useAuth';
 
 
-const ManageOffer = () => {
+const Orders = () => {
     const [ data ,setData] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
     const [getUserLoading, setGetUserLoading] = useState(true)
@@ -32,10 +31,10 @@ const ManageOffer = () => {
     const handleSearch = async () => {
       try {
         if (searchTerm) {
-          const res = await api.post(`offer/search?email=${user?.email}`, { searchTerm });
+          const res = await api.post(`payments?email=${user?.email}`, { searchTerm });
           setData(res.data);
         } else {
-          const res = await api.get(`offer/bl?email=${user?.email}`);
+          const res = await api.get(`payments?email=${user?.email}`);
           setData(res?.data);
         }
       } catch (error) {
@@ -44,12 +43,12 @@ const ManageOffer = () => {
     };
   
 useEffect(() => {
-  api.get(`offer/bl?email=${user?.email}`)
+  api.get(`payments?email=${user?.email}`)
     .then(res => {
       setGetUserLoading(false);
       setData(res.data)
     });
-}, [user]);
+}, []);
 
     const handleDelete = (row) => {
       setViewDetails(row);
@@ -95,23 +94,25 @@ useEffect(() => {
     }
 
     return data?.map((row) => (
-      <TableRow key={row?._id} className="bg-gray-100 hover:bg-green-200">
+      <TableRow key={row._id} className="bg-gray-100 hover:bg-green-50">
         <TableCell className="font-extralight text-xs">
-          {row?.offerName}
+          {row.offerName}
         </TableCell>
         <TableCell className="font-extralight text-xs">
-          {row?.operator}
+          {row.operator}
         </TableCell>
         <TableCell className="font-extralight text-xs text-right">
-          ${row?.price}
+          ${row.price}
         </TableCell>
-    
+        <TableCell className="font-extralight text-xs text-right">
+          <span className={row?.status === 'approved'? "bg-green-500 rounded-full px-2 py-1" : "bg-red-600 text-white rounded-full px-2 py-1"}>{row?.status}</span>
+        </TableCell>
         <TableCell className="font-extralight text-xs ">
           <div className="flex gap-5">
             <button onClick={() => handleEdit(row)}>
               <EditIcon />
             </button>
-            <button onClick={() => handleDelete(row?.id, row)}>
+            <button onClick={() => handleDelete(row.id, row)}>
               <DeleteIcon />
             </button>
           </div>
@@ -158,7 +159,9 @@ useEffect(() => {
               <TableCell className="w-1/4 font-bold text-right">
                 Price
               </TableCell>
-            
+              <TableCell className="w-1/4 font-bold text-right">
+                Status
+              </TableCell>
               <TableCell className="w-1/4 font-bold text-right">
                Action
               </TableCell>
@@ -185,7 +188,6 @@ useEffect(() => {
 
 {/* update offer with modal */}
       <Modal handleCancel={handleCancel} isModalOpen={isModalOpen}>
-        <UpdateOffer  offer={viewDetails}></UpdateOffer>
         
  </Modal>
     </div>
@@ -193,7 +195,7 @@ useEffect(() => {
     );
 };
 
-export default ManageOffer;
+export default Orders;
 
 
 
