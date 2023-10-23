@@ -69,8 +69,6 @@ const AdminDrawer = () => {
           }`}>
           Manage Offers
         </NavLink>
-
-
       </List>
     </Box>
   );

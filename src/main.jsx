@@ -14,12 +14,14 @@ import SignIn from "./page/Login&Reg/Login.jsx";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
 import AdminRoute from "./AdminRoute/AdminRoute.jsx";
 import ManageOffer from "./page/AdminPage/ManageOffer/ManageOffer.jsx";
-import AdminDashboard from "./page/AdminPage/AdminDashboard.jsx";
 import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
 import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
 import ManageUser from "./page/AdminPage/ManageUser/ManageUser.jsx";
 import BuyOffer from "./page/BuyOffer/BuyOffer.jsx";
 import Orders from "./page/AdminPage/Orders.jsx/Orders.jsx";
+import PrivetRoute from "./PrivetRoute/PrivetRoute.jsx";
+import Dashboard from "./page/Dashboard/Dashboard.jsx";
+import Profile from "./page/Profile/Profile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -81,11 +83,15 @@ const router = createBrowserRouter([
         path: "reg",
         element: <Reg></Reg>,
       },
+      {
+        path: "profile",
+        element: <PrivetRoute><Profile></Profile></PrivetRoute>,
+      },
     ],
   },
   {
-    path:'admin_dashboard',
-    element:<AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
+    path:'dashboard',
+    element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
     children:[
       {
         path:'admin_home', 
