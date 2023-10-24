@@ -5,6 +5,7 @@ import useAdmin from "../../hooks/useAdmin";
 import UserDrawer from "../../components/UserDrawer";
 const Dashboard = () => {
     const {isAdmin} = useAdmin()
+    console.log(isAdmin);
   return (
     <>
      { isAdmin ? <AdminDrawer></AdminDrawer>: <UserDrawer></UserDrawer>}

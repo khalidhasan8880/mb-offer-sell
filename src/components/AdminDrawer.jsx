@@ -32,18 +32,18 @@ const AdminDrawer = () => {
     <Box sx={{ width: 250 }} role="presentation">
       <List className="space-y-2">
         <NavLink
-          to={`/admin_dashboard/orders`}
+          to={`/dashboard/orders`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/admin_dashboard/orders")
+            isNavLinkActive("/dashboard/orders")
               ? "text-green-400"
               : ""
           }`}>
           Orders
         </NavLink>
         <NavLink
-          to={`/admin_dashboard/admin_home`}
+          to={`/dashboard/admin_home`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/admin_dashboard/admin_home")
+            isNavLinkActive("/dashboard/admin_home")
               ? "text-green-400"
               : ""
           }`}>
@@ -51,9 +51,9 @@ const AdminDrawer = () => {
         </NavLink>
 
         <NavLink
-          to={`/admin_dashboard/manage_users`}
+          to={`/dashboard/manage_users`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/admin_dashboard/manage_users")
+            isNavLinkActive("/dashboard/manage_users")
               ? "text-green-400"
               : ""
           }`}>
@@ -61,9 +61,9 @@ const AdminDrawer = () => {
         </NavLink>
 
         <NavLink
-          to={`/admin_dashboard/manage_offers`}
+          to={`/dashboard/manage_offers`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/admin_dashboard/manage_offers")
+            isNavLinkActive("/dashboard/manage_offers")
               ? "text-green-400"
               : ""
           }`}>

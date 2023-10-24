@@ -8,15 +8,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 const Profile = () => {
-  const { user, updateProfile } = useAuth();
+  const { user } = useAuth();
   const [name, setName] = useState(user.displayName || "");
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber || "");
   const [pin, setPin] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
 
 
-  const handleAvatarChange = (e) => {
-  };
+  
 
 
   const handleUpdateProfile = () => {
@@ -30,7 +29,7 @@ const Profile = () => {
         setIsEditMode(false); // Exit edit mode after updating profile
         // Profile updated successfully
       })
-      .catch((error) => {
+      .catch(() => {
         // Handle error
       });
   };

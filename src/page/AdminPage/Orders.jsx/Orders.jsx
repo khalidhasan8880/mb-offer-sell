@@ -16,6 +16,7 @@ import AlertModal from "../../../components/AlertModal";
 import Modal from "../../../components/Modal";
 import useAuth from "../../../hooks/useAuth";
 import FeedbackForm from "../../../components/FeedbackForm";
+import CopyToClipboard from "../../../components/CopyClipboard";
 
 const Orders = () => {
   const [data, setData] = useState([]);
@@ -24,6 +25,7 @@ const Orders = () => {
   const [viewDetails, setViewDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const { user } = useAuth();
 
   const handleSearch = async () => {
@@ -49,7 +51,13 @@ const Orders = () => {
     });
   }, [user]);
 
-  const handleAlertConfirm = (row) => {
+  const handleAlertConfirmation = (row) => {
+    setAlertMessage("Are you sure you want to approve this item?")
+    setViewDetails(row);
+    setIsAlertOpen(true);
+  };
+  const handleFakeTransitionConfirmation = (row) => {
+    setAlertMessage("Are you sure you this was a fake transition?")
     setViewDetails(row);
     setIsAlertOpen(true);
   };
@@ -59,6 +67,19 @@ const Orders = () => {
     setIsModalOpen(true);
   };
 
+  const handleFakeTransition = () => {
+    console.log("approved");
+    api
+      .put(`/payment/fake/${viewDetails?._id}?email=${user?.email}`)
+      .then((response) => {
+        console.log(" successfully.", response?.data);
+      })
+      .catch((error) => {
+        console.error("Error item:", error);
+      });
+
+    setIsAlertOpen(false);
+  };
   const handleApproved = () => {
     console.log("approved");
     api
@@ -107,7 +128,7 @@ const Orders = () => {
     }
 
     return data?.map((row) => (
-      <TableRow key={row?._id} className="bg-gray-100 hover:bg-green-50">
+      <TableRow key={row?._id} className="bg-gray-100 ">
         <TableCell className="font-extralight text-xs">
           {row?.offerName}
         </TableCell>
@@ -117,8 +138,14 @@ const Orders = () => {
         <TableCell className="font-extralight text-xs text-right">
           {row?.paymentMethod}
         </TableCell>
-        <TableCell className="font-extralight text-xs text-right">
+        <TableCell className={row?.paymentSystem ==='send money' ? 'font-extralight text-xs text-right bg-red-200':"font-extralight text-xs text-right bg-green-200"}>
           {row?.paymentSystem}
+        </TableCell>
+        <TableCell className="font-extralight text-xs text-right">
+   <div className="flex gap-x-1 items-center">
+   {row?.phoneNumber}
+          <CopyToClipboard textToCopy={row?.phoneNumber}></CopyToClipboard>
+   </div>
         </TableCell>
         <TableCell className="font-extralight text-xs text-right">
           ${row?.price}
@@ -134,7 +161,7 @@ const Orders = () => {
           </span>
         </TableCell>
         <TableCell className="font-extralight text-xs ">
-          <div className="flex gap-5">
+          <div className="flex gap-2">
             <button
               onClick={() => handleRejectOrder(row)}
               className={
@@ -147,8 +174,18 @@ const Orders = () => {
               }>
               Reject
             </button>
+
+            {row?.paymentSystem === "send money" ? (
+              < >
+                <button onClick={()=>handleFakeTransitionConfirmation(row)} className="px-2 py-1 bg-yellow-700 text-white">Fake</button>
+                <button  onClick={()=>handleFakeTransitionConfirmation(row)} className="px-2 py-1 bg-sky-700 text-white">Taken Withdraw</button>
+              </>
+            ) : (
+              ""
+            )}
+
             <button
-              onClick={() => handleAlertConfirm(row)}
+              onClick={() => handleAlertConfirmation(row)}
               className={
                 row?.status === "rejected" || row?.status === "approved"
                   ? "px-2 py-1 bg-green-300 text-white"
@@ -199,7 +236,7 @@ const Orders = () => {
           />
         </div>
         <TableContainer component={Paper} className="shadow-lg">
-          <Table className="min-w-full table-fixed">
+          <Table className="min-w-full ">
             <TableHead className="bg-orange-100 text-white">
               <TableRow>
                 <TableCell className=" font-bold">Name</TableCell>
@@ -210,6 +247,10 @@ const Orders = () => {
                 <TableCell className=" font-bold text-right">
                   Payment System
                 </TableCell>
+                <TableCell className=" font-bold text-right">
+                  Number
+                </TableCell>
+              
                 <TableCell className=" font-bold text-right">Price</TableCell>
                 <TableCell className=" font-bold text-right">Status</TableCell>
                 <TableCell className=" font-bold text-right">Action</TableCell>
@@ -224,8 +265,8 @@ const Orders = () => {
         <AlertModal
           open={isAlertOpen}
           severity="warning"
-          title="Are you sure you want to delete this item?"
-          description=" Deleting this item is irreversible. Once deleted, you cannot retrieve it.">
+          title={alertMessage}
+         >
           <Button onClick={handleApproved} color="secondary" size="small">
             Yes
           </Button>

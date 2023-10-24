@@ -90,11 +90,39 @@ const Drawer
           </div>
         )}
          <NavLink
-              to={"/dashboard"}
+              to={"/orders"}
               className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-                isChildRouteActive("/dashboard") ? "text-green-400" : ""
+                isChildRouteActive("/orders") ? "text-green-400" : ""
               }`}>
-             Dashboard
+             Orders
+              </NavLink>
+         <NavLink
+              to={"/deposit"}
+              className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+                isChildRouteActive("/deposit") ? "text-green-400" : ""
+              }`}>
+             Deposit
+              </NavLink>
+         <NavLink
+              to={"/transaction"}
+              className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+                isChildRouteActive("/transaction") ? "text-green-400" : ""
+              }`}>
+             Transaction
+              </NavLink>
+         <NavLink
+              to={"/rules"}
+              className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+                isChildRouteActive("/rules") ? "text-green-400" : ""
+              }`}>
+             Rules
+              </NavLink>
+         <NavLink
+              to={"/qna"}
+              className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+                isChildRouteActive("/qna") ? "text-green-400" : ""
+              }`}>
+                Q & A
               </NavLink>
       </List>
     </Box>

@@ -1,11 +1,11 @@
-import * as React from 'react';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertModal({open, handleAlertCancel, children, description, title}) {
+export default function AlertModal({open, handleAlertCancel, children,  title}) {
   
 
   return (
@@ -20,9 +20,9 @@ export default function AlertModal({open, handleAlertCancel, children, descripti
           {title}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          {/* <DialogContentText id="alert-dialog-description">
        {description}
-          </DialogContentText>
+          </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           {children}
