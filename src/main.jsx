@@ -22,11 +22,17 @@ import Orders from "./page/AdminPage/Orders.jsx/Orders.jsx";
 import PrivetRoute from "./PrivetRoute/PrivetRoute.jsx";
 import Dashboard from "./page/Dashboard/Dashboard.jsx";
 import Profile from "./page/Profile/Profile.jsx";
+import First from "./TestSome/First.jsx";
+import UserOrders from "./page/UserOrders.jsx/UserOrders.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
     children: [
+      {
+        path: "/test_some",
+        element: <First></First>,
+      },
       {
         path: "/",
         element: <Home></Home>,
@@ -87,6 +93,10 @@ const router = createBrowserRouter([
         path: "profile",
         element: <PrivetRoute><Profile></Profile></PrivetRoute>,
       },
+      {
+        path: "orders",
+        element: <PrivetRoute><UserOrders></UserOrders></PrivetRoute>,
+      },
     ],
   },
   {
@@ -94,7 +104,7 @@ const router = createBrowserRouter([
     element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
     children:[
       {
-        path:'admin_home', 
+        path:'', 
         element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
       },
       {

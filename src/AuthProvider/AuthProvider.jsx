@@ -4,7 +4,6 @@ import app from "../Firebase/firebase.config";
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app)
 export const AuthContext = createContext()
-console.log(auth);
 const AuthProvider = ({children}) => {
 const [user, setUser] = useState(null)
 const [loading, setLoading] = useState(true)
@@ -71,8 +70,7 @@ const [loading, setLoading] = useState(true)
                 }
               })
               .then(res=>res.json())
-              .then(data=>{
-                console.log(data);
+              .then(()=>{
               })
             }             
            })

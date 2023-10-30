@@ -96,8 +96,7 @@ const AddOffer = () => {
 
       api
         .post(`/add-offer?email=${user?.email}`, postData)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           setAlertMessage(<Alert className="" severity="success">Successfully Added</Alert>);
           setTimeout(() => {
             setAlertMessage(null);

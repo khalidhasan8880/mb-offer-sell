@@ -49,7 +49,6 @@ const UpdateOffer = ({ offer }) => {
     { name: "Rangpur" },
     { name: "Mymensingh" },
   ];
-console.log(offer);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,7 +68,7 @@ console.log(offer);
       console.error('Error updating offer:', error);
     }
   };
-  console.log(divisions.find(d=> d.name === division));
+ 
   return (
     <form className="p-4 space-y-4" onSubmit={handleSubmit}>
       <TextField

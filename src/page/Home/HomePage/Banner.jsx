@@ -1,7 +1,23 @@
-const Banner = ({ user }) => {
-    const { name, email } = user;
-    const avatarLetter = name.charAt(0).toUpperCase();
-  
+import { useEffect, useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import api from "../../../hooks/interceptors";
+
+const Banner = () => {
+  const [balance, setBalance] = useState('')
+  const {user} = useAuth()
+  const avatarLetter = user?.displayName || user?.email.charAt(0).toUpperCase();
+  console.log(user);
+     useEffect(()=>{
+      const token = localStorage.getItem("token")
+      if (token) {
+        api.get(`/get-balance?email=${user?.email}`)
+        .then(res=>{
+          setBalance(res.data?.balance)
+        })
+      }
+     
+     },[user?.email])
+
     return (
       <section className="bg-gradient-to-r from-blue-600 to-green-400 text-white rounded-lg shadow-lg py-6 px-4 sm:px-6 lg:px-8">
         <div className="sm:flex items-center justify-between">
@@ -10,14 +26,14 @@ const Banner = ({ user }) => {
               {avatarLetter}
             </div>
             <div className="ml-4">
-              <h2 className="my-0 text-white text-2xl">{name}</h2>
-              <p className="text-gray-200 mt-1 text-lg">{email}</p>
+              <h2 className="my-0 text-white text-2xl">{user?.displayName}</h2>
+              <p className="text-gray-200 mt-1 text-lg">{user?.email}</p>
             </div>
           </div>
           <div className="flex-between sm:flex-col sm:text-right mt-5 sm:mt-0">
             <div className="text-white">
-              <p className="sm:text-2xl text-lg">Total Yearly Cost:</p>
-              <h2 className="text-2xl">$XXXX</h2>
+              <p className="sm:text-2xl text-lg">Total Balance</p>
+              <h2 className="text-2xl">{balance}</h2>
             </div>
             <div>
               <p className="sm:text-2xl text-lg">Monthly Cost:</p>

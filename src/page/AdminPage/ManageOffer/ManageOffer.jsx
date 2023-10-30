@@ -23,7 +23,7 @@ import useAuth from '../../../hooks/useAuth';
 const ManageOffer = () => {
     const [ data ,setData] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
-    const [getUserLoading, setGetUserLoading] = useState(true)
+    const [getOfferLoading, setGetOfferLoading] = useState(true)
     const [viewDetails, setViewDetails] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -46,7 +46,7 @@ const ManageOffer = () => {
 useEffect(() => {
   api.get(`offer/bl?email=${user?.email}`)
     .then(res => {
-      setGetUserLoading(false);
+      setGetOfferLoading(false);
       setData(res.data)
     });
 }, [user]);
@@ -81,11 +81,7 @@ useEffect(() => {
       setIsAlertOpen(false);
       setIsModalOpen(false)
     };
-  
-
-    if (getUserLoading ) {
-        return <Loading></Loading>
-    }
+ 
 
 
    
@@ -120,7 +116,7 @@ useEffect(() => {
     ));
   };
 
-  if (getUserLoading) {
+  if (getOfferLoading) {
     return <Loading />;
   }
   

@@ -31,6 +31,7 @@ const AdminDrawer = () => {
   const list = () => (
     <Box sx={{ width: 250 }} role="presentation">
       <List className="space-y-2">
+        
         <NavLink
           to={`/dashboard/orders`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
@@ -40,16 +41,6 @@ const AdminDrawer = () => {
           }`}>
           Orders
         </NavLink>
-        <NavLink
-          to={`/dashboard/admin_home`}
-          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/dashboard/admin_home")
-              ? "text-green-400"
-              : ""
-          }`}>
-          Admin Home
-        </NavLink>
-
         <NavLink
           to={`/dashboard/manage_users`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${

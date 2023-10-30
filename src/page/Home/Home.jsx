@@ -5,7 +5,7 @@ import SelectOperator from "./HomePage/SelectOperator";
 const Home = () => {
     return (
         <>
-        <Banner user={{name:'khalid hasan',  email:'khalidhasan9888@gmail.com'}}></Banner>
+        <Banner ></Banner>
 
             <SelectOperator></SelectOperator>
         </>

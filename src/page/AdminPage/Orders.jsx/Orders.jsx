@@ -68,7 +68,7 @@ const Orders = () => {
   };
 
   const handleFakeTransition = () => {
-    console.log("approved");
+    console.log("fake");
     api
       .put(`/payment/fake/${viewDetails?._id}?email=${user?.email}`)
       .then((response) => {
@@ -154,7 +154,7 @@ const Orders = () => {
           <span
             className={
               row?.status === "approved"
-                ? "bg-green-500 rounded-full px-2 py-1"
+                ? "bg-green-500 rounded-full px-2 py-1 text-white"
                 : "bg-red-600 text-white rounded-full px-2 py-1"
             }>
             {row?.status}
@@ -166,7 +166,7 @@ const Orders = () => {
               onClick={() => handleRejectOrder(row)}
               className={
                 row?.status === "rejected" || row?.status === "approved"
-                  ? "px-2 py-1 bg-red-300 text-white"
+                  ? "px-2 py-1 bg-red-200 text-white"
                   : "px-2 py-1 bg-red-500 text-white"
               }
               disabled={
@@ -188,7 +188,7 @@ const Orders = () => {
               onClick={() => handleAlertConfirmation(row)}
               className={
                 row?.status === "rejected" || row?.status === "approved"
-                  ? "px-2 py-1 bg-green-300 text-white"
+                  ? "px-2 py-1 bg-green-200 text-white"
                   : "px-2 py-1 bg-green-500 text-white"
               }
               disabled={

@@ -4,14 +4,7 @@ import api from "../../hooks/interceptors";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  TextField,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-} from "@mui/material";
+import {TextField} from "@mui/material";
 import Carousel from "../../components/Carousel";
 import SendMoney from "../PaymentSystem/SendMoney";
 import PayWithBalance from "../PaymentSystem/PayWithBalance";
@@ -24,7 +17,6 @@ const BuyOffer = () => {
   const sliderRef = useRef(null);
   const [formData, setFormData] = useState({
     phoneNumber: "",
-    paymentMethod: "",
   });
   const [errorMassage, setErrorMassage] = useState({});
   const handleInputChange = (e) => {
@@ -73,13 +65,7 @@ const BuyOffer = () => {
       });
       return;
     }
-    if (!formData?.paymentMethod) {
-      setErrorMassage({
-        paymentMethod: true,
-        message: "please select a payment method",
-      });
-      return;
-    }
+   
     setPaymentSystem(system);
     setErrorMassage({});
     nextSlide();
@@ -136,8 +122,7 @@ const BuyOffer = () => {
           </div>
 
           {/* Input field for phone number */}
-          <>
-            <div>
+          <div >
               <TextField
                 type="phone"
                 name="phoneNumber"
@@ -152,40 +137,8 @@ const BuyOffer = () => {
                 {errorMassage?.phoneNumber && errorMassage?.message}
               </p>
             </div>
-            <FormControl component="fieldset" className="mt-4">
-              <FormLabel
-                component="legend"
-                className="text-sm text-gray-600 mb-2">
-                Select Payment Method:
-              </FormLabel>
-              <RadioGroup
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleInputChange}>
-                <FormControlLabel
-                  value="bkash"
-                  control={<Radio />}
-                  label="Bkash"
-                  className="text-sm text-gray-600 mb-2"
-                />
-                <FormControlLabel
-                  value="nagad"
-                  control={<Radio />}
-                  label="Nagad"
-                  className="text-sm text-gray-600 mb-2"
-                />
-                <FormControlLabel
-                  value="upay"
-                  control={<Radio />}
-                  label="Upay"
-                  className="text-sm text-gray-600 mb-2"
-                />
-              </RadioGroup>
-              <p className="text-red-500">
-                {errorMassage?.paymentMethod && errorMassage?.message}
-              </p>
-            </FormControl>
-            <div className="flex justify-center items-center flex-col gap-3">
+         
+            <div className="flex justify-center items-center flex-col gap-3 mt-6">
               <button
                 type="submit"
                 onClick={() => paymentSystemHandler("Pay with Balance")}
@@ -198,7 +151,6 @@ const BuyOffer = () => {
                 Send Money
               </button>
             </div>
-          </>
         </div>
         <div>
           <div className="flex gap-2 items-center">

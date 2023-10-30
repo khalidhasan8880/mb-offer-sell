@@ -1,4 +1,8 @@
-import {  TextField } from "@mui/material";
+import {  TextField , Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel, } from "@mui/material";
 import { useState } from "react";
 import CopyToClipboard from "../../components/CopyClipboard";
 import api from "../../hooks/interceptors";
@@ -11,6 +15,7 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
 
   const [sendMoneyFormData, setSendMoneyFormData] = useState({
+    paymentMethod:"",
     amount: "",
     transactionId: "",
   });
@@ -29,6 +34,10 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
 
     if (!sendMoneyFormData?.amount) {
       setErrorMassage({ amount: true, message: "please give your number" });
+      return;
+    }
+    if (!sendMoneyFormData?.paymentMethod) {
+      setErrorMassage({ paymentMethod: true, message: "please select your mobile bank" });
       return;
     }
 
@@ -96,6 +105,40 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
             <p className="text-sm text-gray-600">{offer?.price}</p>
           </div>
         </div>
+        <FormControl component="fieldset" className="mt-4">
+              <FormLabel
+                component="legend"
+                className="text-sm text-gray-600 mb-2">
+                Select Payment Method:
+              </FormLabel>
+              <RadioGroup
+                name="paymentMethod"
+                value={sendMoneyFormData.paymentMethod}
+                onChange={handleInputChange}
+                >
+                <FormControlLabel
+                  value="bkash"
+                  control={<Radio />}
+                  label="Bkash"
+                  className="text-sm text-gray-600 mb-2"
+                />
+                <FormControlLabel
+                  value="nagad"
+                  control={<Radio />}
+                  label="Nagad"
+                  className="text-sm text-gray-600 mb-2"
+                />
+                <FormControlLabel
+                  value="upay"
+                  control={<Radio />}
+                  label="Upay"
+                  className="text-sm text-gray-600 mb-2"
+                />
+              </RadioGroup>
+              <p className="text-red-500">
+                {errorMassage?.paymentMethod && errorMassage?.message}
+              </p>
+            </FormControl>
         <div className="mt-4">
           <TextField
             type="number"
