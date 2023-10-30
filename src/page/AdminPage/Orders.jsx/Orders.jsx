@@ -25,7 +25,7 @@ const Orders = () => {
   const [viewDetails, setViewDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
   const { user } = useAuth();
 
   const handleSearch = async () => {
@@ -52,12 +52,12 @@ const Orders = () => {
   }, [user]);
 
   const handleAlertConfirmation = (row) => {
-    setAlertMessage("Are you sure you want to approve this item?")
+    setAlertMessage("Are you sure you want to approve this item?");
     setViewDetails(row);
     setIsAlertOpen(true);
   };
   const handleFakeTransitionConfirmation = (row) => {
-    setAlertMessage("Are you sure you this was a fake transition?")
+    setAlertMessage("Are you sure you this was a fake transition?");
     setViewDetails(row);
     setIsAlertOpen(true);
   };
@@ -138,14 +138,19 @@ const Orders = () => {
         <TableCell className="font-extralight text-xs text-right">
           {row?.paymentMethod}
         </TableCell>
-        <TableCell className={row?.paymentSystem ==='send money' ? 'font-extralight text-xs text-right bg-red-200':"font-extralight text-xs text-right bg-green-200"}>
+        <TableCell
+          className={
+            row?.paymentSystem === "send money"
+              ? "font-extralight text-xs text-right bg-red-200"
+              : "font-extralight text-xs text-right bg-green-200"
+          }>
           {row?.paymentSystem}
         </TableCell>
         <TableCell className="font-extralight text-xs text-right">
-   <div className="flex gap-x-1 items-center">
-   {row?.phoneNumber}
-          <CopyToClipboard textToCopy={row?.phoneNumber}></CopyToClipboard>
-   </div>
+          <div className="flex gap-x-1 items-center">
+            {row?.phoneNumber}
+            <CopyToClipboard textToCopy={row?.phoneNumber}></CopyToClipboard>
+          </div>
         </TableCell>
         <TableCell className="font-extralight text-xs text-right">
           ${row?.price}
@@ -162,26 +167,32 @@ const Orders = () => {
         </TableCell>
         <TableCell className="font-extralight text-xs ">
           <div className="flex gap-2">
-            <button
-              onClick={() => handleRejectOrder(row)}
-              className={
-                row?.status === "rejected" || row?.status === "approved"
-                  ? "px-2 py-1 bg-red-200 text-white"
-                  : "px-2 py-1 bg-red-500 text-white"
-              }
-              disabled={
-                row?.status === "rejected" || row?.status === "approved"
-              }>
-              Reject
-            </button>
-
             {row?.paymentSystem === "send money" ? (
-              < >
-                <button onClick={()=>handleFakeTransitionConfirmation(row)} className="px-2 py-1 bg-yellow-700 text-white">Fake</button>
-                <button  onClick={()=>handleFakeTransitionConfirmation(row)} className="px-2 py-1 bg-sky-700 text-white">Taken Withdraw</button>
+              <>
+                <button
+                  onClick={() => handleFakeTransitionConfirmation(row)}
+                  className="px-2 py-1 bg-yellow-700 text-white">
+                  Fake Send Money
+                </button>
+                <button
+                  onClick={() => handleFakeTransitionConfirmation(row)}
+                  className="px-2 py-1 bg-sky-700 text-white">
+                  Return Cash 
+                </button>
               </>
             ) : (
-              ""
+              <button
+                onClick={() => handleRejectOrder(row)}
+                className={
+                  row?.status === "rejected" || row?.status === "approved"
+                    ? "px-2 py-1 bg-red-200 text-white"
+                    : "px-2 py-1 bg-red-500 text-white"
+                }
+                disabled={
+                  row?.status === "rejected" || row?.status === "approved"
+                }>
+                Reject
+              </button>
             )}
 
             <button
@@ -247,10 +258,8 @@ const Orders = () => {
                 <TableCell className=" font-bold text-right">
                   Payment System
                 </TableCell>
-                <TableCell className=" font-bold text-right">
-                  Number
-                </TableCell>
-              
+                <TableCell className=" font-bold text-right">Number</TableCell>
+
                 <TableCell className=" font-bold text-right">Price</TableCell>
                 <TableCell className=" font-bold text-right">Status</TableCell>
                 <TableCell className=" font-bold text-right">Action</TableCell>
@@ -262,11 +271,7 @@ const Orders = () => {
           </Table>
         </TableContainer>
 
-        <AlertModal
-          open={isAlertOpen}
-          severity="warning"
-          title={alertMessage}
-         >
+        <AlertModal open={isAlertOpen} severity="warning" title={alertMessage}>
           <Button onClick={handleApproved} color="secondary" size="small">
             Yes
           </Button>
