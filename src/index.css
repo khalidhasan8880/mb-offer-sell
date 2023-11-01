@@ -80,33 +80,21 @@ section{
 .teletalk_color{
  color: rgb(24, 255, 24);
 }
-.custom-button {
-  display: inline-block;
-  padding: 10px 20px;
-  text-align: center;
-  color: white;
-  background-color: #51e756;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+
+
+
+
+
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-.custom-button::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: #00ff08;
-  transition: width 3s ease; /* Background fills slowly over 3 seconds */
-}
-
-.custom-button:active::after {
-  width: 100%;
-}
-
-.custom-button:not(:active)::after {
-  transition: width 0.3s ease; /* Background disappears quickly over 0.3 seconds */
+.notification-box {
+  animation: slideIn 0.2s ease-out;
 }

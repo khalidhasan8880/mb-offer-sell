@@ -4,7 +4,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 export default function SimpleBadge({badgeContent}) {
   return (
-    <Badge className='mt-2'  badgeContent={badgeContent} color="primary">
+    <Badge className={badgeContent && 'mt-2'}  badgeContent={badgeContent} color="primary">
       <MailIcon color="action" />
     </Badge>
   );

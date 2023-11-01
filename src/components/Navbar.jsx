@@ -7,6 +7,7 @@ import Drawer from "./Drawer";
 import SimpleBadge from "./Badge";
 import { useEffect, useState } from "react";
 import api from "../hooks/interceptors";
+import LanguageToggleButton from "./LanguageToggleButton";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -15,11 +16,11 @@ export default function Navbar() {
 
   useEffect(() => {
     api.get(`/notifications?email=${user?.email}`).then((res) => {
-      // setNotifications(res.data);
+      setNotifications(res.data);
     });
   }, [user?.email]);
-  const openNotificationBox = () => {
-    setIsOpenNotification(true);
+  const toggleNotification = () => {
+    setIsOpenNotification(!isOpenNotifications);
   };
   const closeNotificationBox = () => {
     setIsOpenNotification(false);
@@ -28,9 +29,12 @@ export default function Navbar() {
     <>
       <nav className="flex-between py-1 container mx-auto rounded-full w-full mt-2 bg-gradient-to-r from-green-600/10 to-blue-700/30 ">
         <Drawer></Drawer>
+        <div>
         {user ? (
-          <div className="flex gap-x-5 items-center">
-            <button onClick={openNotificationBox}>
+          <div className="flex gap-x-6 items-center">
+            <LanguageToggleButton></LanguageToggleButton>
+            
+            <button onClick={toggleNotification}>
               <SimpleBadge badgeContent={notifications?.length}></SimpleBadge>
             </button>
             <Link to="/profile">
@@ -50,11 +54,12 @@ export default function Navbar() {
             Login
           </Link>
         )}
+        </div>
       </nav>
 
       {/* notification box  */}
       {isOpenNotifications && (
-        <div className="absolute rounded-2xl top-14 p-3 min-h-[250px] right-4 sm:w-96 max-w-sm  backdrop-blur-2xl ">
+        <div className="absolute overflow-hidden notification-box rounded-2xl top-14 p-3 min-h-[250px] right-4 sm:w-96 w-52 max-w-sm  bg-black/30 ">
           {notifications?.map((n) => (
             <Link
             onClick={closeNotificationBox}

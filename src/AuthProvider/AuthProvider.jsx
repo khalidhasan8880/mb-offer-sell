@@ -1,13 +1,33 @@
 import { createContext, useEffect, useState } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile, onAuthStateChanged } from "firebase/auth";
 import app from "../Firebase/firebase.config";
+import api from "../hooks/interceptors";
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app)
 export const AuthContext = createContext()
 const AuthProvider = ({children}) => {
 const [user, setUser] = useState(null)
 const [loading, setLoading] = useState(true)
+const [balance, setBalance] = useState('')
+const [language, setLanguage] = useState('BN');
+const [estimateCost, setEstimateCost] = useState({})
 
+useEffect(()=>{
+  const token = localStorage.getItem("token")
+  if (token) {
+    api.get(`/get-balance?email=${user?.email}`)
+    .then(res=>{
+      setBalance(res.data?.balance)
+    })
+  } 
+ },[user?.email])
+ useEffect(()=>{
+  api.get(`/total-cost-monthly?email=${user?.email}`)
+  .then(res=>{
+    setEstimateCost(res.data)
+  })
+ 
+ },[user?.email])
 
 
   // google authentication
@@ -97,6 +117,10 @@ const [loading, setLoading] = useState(true)
         updateUser,
         loading,
         user,
+        balance,
+        estimateCost,
+        language,
+        setLanguage,
     }
     return (
     <AuthContext.Provider value={authInfo}>
