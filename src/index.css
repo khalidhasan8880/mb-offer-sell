@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Raleway', sans-serif;
-  @apply px-2
+  @apply px-2 
 }
 h1{
   font-weight: bolder;

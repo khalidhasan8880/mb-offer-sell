@@ -17,8 +17,8 @@ const Banner = () => {
             {avatarLetter}
           </div>
           <div className="ml-4">
-            <Greeting className="font-bold text-2xl"></Greeting>
-            <h2 className="my-0 font-bold">{user?.displayName}khalid</h2>           
+            <Greeting className="font-bold text-2xl text-black/60"></Greeting>
+            <h2 className="my-0 font-bold text-black/60">{user?.displayName}khalid</h2>           
           </div>
         </div>
         <h2 className={`text-2xl font-bold ${balance >= 0 ? 'text-teal-500':'text-red-500'}`}>Balance : {balance} ৳</h2>
@@ -29,10 +29,10 @@ const Banner = () => {
         </Link>
       </div>
       <div className="flex-between flex-wrap items-end sm:flex-col  sm:text-right mt-5 sm:mt-0">
-        <h2 className="text-2xl font-bold sm:mb-2">Total Cost</h2>
+        <h2 className="text-2xl font-bold sm:mb-2 text-black/60">Total Cost</h2>
         <div>
-          <h2 className="text-sm font-semibold">This Month: {estimateCost?.monthlyCost} ৳</h2>
-          <h2 className="text-sm font-semibold">This Year: {estimateCost?.yearlyCost} ৳</h2>
+          <h2 className="text-sm font-semibold text-black/60">This Month: {estimateCost?.monthlyCost} ৳</h2>
+          <h2 className="text-sm font-semibold text-black/60">This Year: {estimateCost?.yearlyCost} ৳</h2>
         </div>
       </div>
     </section>

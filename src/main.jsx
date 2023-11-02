@@ -24,6 +24,8 @@ import Dashboard from "./page/Dashboard/Dashboard.jsx";
 import Profile from "./page/Profile/Profile.jsx";
 import First from "./TestSome/First.jsx";
 import UserOrders from "./page/UserOrders.jsx/UserOrders.jsx";
+import AddBalance from "./page/AddBalance/AddBalance.jsx";
+import BalanceRequest from "./page/AdminPage/BalanceRequest/BalanceRequest.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "add_balance",
+        element: <AddBalance></AddBalance>
       },
       {
         path: "airtel",
@@ -101,11 +107,15 @@ const router = createBrowserRouter([
   },
   {
     path:'dashboard',
-    element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
+    element:<AdminRoute><Dashboard></Dashboard></AdminRoute>,
     children:[
       {
         path:'', 
         element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
+        path:'balance_request', 
+        element:<AdminRoute><BalanceRequest></BalanceRequest></AdminRoute>
       },
       {
         path:'orders', 

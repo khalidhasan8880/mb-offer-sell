@@ -27,7 +27,7 @@ export default function Navbar() {
   };
   return (
     <>
-      <nav className="flex-between py-1 container mx-auto rounded-full w-full mt-2 bg-gradient-to-r from-green-600/10 to-blue-700/30 ">
+      <nav className="flex-between py-1 container mx-auto rounded-full w-full mt-2 mb-6 bg-gradient-to-r from-green-600/10 to-blue-700/30 ">
         <Drawer></Drawer>
         <div>
         {user ? (

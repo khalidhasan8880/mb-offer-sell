@@ -84,9 +84,9 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
         <CopyToClipboard textToCopy="01619167602" />
       </div>
       <h2 className="text-base text-gray-700 mt-2 mb-3">
-      দয়া করে এই নাম্বারে পেমেন্ট পাঠান: Bkash, Nagad, অথবা Rocket। পেমেন্ট সম্পূর্ণ হলে, আমাদের জানানোর জন্য আপনি Transaction ID এবং টাকার পরিমান লিখুন। ধন্যবাদ।
+      অনুগ্রহ করে এই নাম্বারে পেমেন্ট পাঠান: Bkash, Nagad, অথবা Rocket। পেমেন্ট সম্পূর্ণ হলে, পেইমেন্টের প্রামান হিসেবে Transaction ID এবং টাকার পরিমান লিখুন। ধন্যবাদ।
       </h2>
-      <p className="text-gray-500 text-sm font-extralight">Transaction Id পেতে  আপনি আপনার মেসেজ চেক করুন টাকা পাঠানোর পর। </p>
+      <p className="text-gray-500 text-sm font-extralight mb-3">Transaction Id পেতে  আপনি আপনার মেসেজ চেক করুন টাকা পাঠানোর পর। </p>
       <div className="space-y-4 mt-2">
         <h2 className="text-lg font-semibold text-gray-800">
           {offer?.offerName}

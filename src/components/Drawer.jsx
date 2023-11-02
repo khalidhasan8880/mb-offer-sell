@@ -101,6 +101,13 @@ const Drawer
               className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
                 isChildRouteActive("/deposit") ? "text-green-400" : ""
               }`}>
+             Added Balance History
+              </NavLink>
+         <NavLink
+              to={"/deposit"}
+              className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+                isChildRouteActive("/deposit") ? "text-green-400" : ""
+              }`}>
              Deposit
               </NavLink>
          <NavLink
