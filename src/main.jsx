@@ -26,6 +26,7 @@ import First from "./TestSome/First.jsx";
 import UserOrders from "./page/UserOrders.jsx/UserOrders.jsx";
 import AddBalance from "./page/AddBalance/AddBalance.jsx";
 import BalanceRequest from "./page/AdminPage/BalanceRequest/BalanceRequest.jsx";
+import Deposit from "./page/Deposit/Deposit.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
         path: "orders",
         element: <PrivetRoute><UserOrders></UserOrders></PrivetRoute>,
       },
+      {
+        path: "deposit",
+        element: <PrivetRoute><Deposit></Deposit></PrivetRoute>,
+      },
     ],
   },
   {
@@ -121,6 +126,10 @@ const router = createBrowserRouter([
         path:'orders', 
         element:<AdminRoute><Orders></Orders></AdminRoute>
       },
+      // {
+      //   path:'manage_deposit', 
+      //   element:<AdminRoute></AdminRoute>
+      // },
       {
         path:'manage_users', 
         element:<AdminRoute><ManageUser></ManageUser></AdminRoute>

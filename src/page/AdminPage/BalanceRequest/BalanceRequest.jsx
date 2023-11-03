@@ -48,24 +48,25 @@ const BalanceRequest = () => {
     api.get(`balance?email=${user?.email}`).then((res) => {
       setGetUserLoading(false);
       setData(res.data);
+      console.log(res.data);
     });
   }, [user]);
 
-//   const handleAlertConfirmation = (row) => {
-//     setAlertMessage("Are you sure you want to approve this item?");
-//     setViewDetails(row);
-//     setIsAlertOpen(true);
-//   };
-//   const handleFakeTransitionConfirmation = (row) => {
-//     setAlertMessage("Are you sure you this was a fake transition?");
-//     setViewDetails(row);
-//     setIsAlertOpen(true);
-//   };
+  const handleAlertConfirmation = (row) => {
+    setAlertMessage("Are you sure you want to approve this item?");
+    setViewDetails(row);
+    setIsAlertOpen(true);
+  };
+  const handleFakeTransitionConfirmation = (row) => {
+    setAlertMessage("Are you sure you this was a fake transition?");
+    setViewDetails(row);
+    setIsAlertOpen(true);
+  };
 
-//   const handleRejectOrder = (row) => {
-//     setViewDetails(row);
-//     setIsModalOpen(true);
-//   };
+  const handleRejectOrder = (row) => {
+    setViewDetails(row);
+    setIsModalOpen(true);
+  };
 
   const handleFakeTransition = () => {
     console.log("fake");
@@ -81,9 +82,9 @@ const BalanceRequest = () => {
     setIsAlertOpen(false);
   };
   const handleApproved = () => {
-    console.log("approved");
+    console.log("/approved/add-balance/:id");
     api
-      .put(`/payment/approved/${viewDetails?._id}?email=${user?.email}`)
+      .put(`/approved/add-balance/${viewDetails?._id}?email=${user?.email}`)
       .then((response) => {
         console.log(" successfully.", response?.data);
       })
@@ -131,25 +132,23 @@ const BalanceRequest = () => {
       <TableRow key={row?._id} className="bg-gray-100 ">
         
         <TableCell className="font-extralight text-xs text-right">
+          {row?.userEmail}
+        </TableCell>
+        <TableCell className="font-extralight text-xs text-right">
+          <div className="flex items-center gap-x-2">
+          {row?.transactionId}
+            <CopyToClipboard textToCopy={row?.transactionId}></CopyToClipboard>
+          </div>
+        
+        </TableCell>
+        <TableCell className="font-extralight text-xs text-right">
           {row?.paymentMethod}
         </TableCell>
         <TableCell
-          className={
-            row?.paymentSystem === "send money"
-              ? "font-extralight text-xs text-right bg-red-200"
-              : "font-extralight text-xs text-right bg-green-200"
-          }>
-          {row?.paymentSystem}
+          >
+          {row?.amount}
         </TableCell>
-        <TableCell className="font-extralight text-xs text-right">
-          <div className="flex gap-x-1 items-center">
-            {row?.phoneNumber}
-            <CopyToClipboard textToCopy={row?.phoneNumber}></CopyToClipboard>
-          </div>
-        </TableCell>
-        <TableCell className="font-extralight text-xs text-right">
-          ${row?.amount}
-        </TableCell>
+       
         <TableCell className="font-extralight text-xs text-right">
           <span
             className={
@@ -162,8 +161,31 @@ const BalanceRequest = () => {
         </TableCell>
         <TableCell className="font-extralight text-xs ">
           <div className="flex gap-2">
-           
-         
+          <button
+                onClick={() => handleFakeTransition(row)}
+                className={
+                  row?.status === "rejected" || row?.status === "approved"
+                    ? "px-2 py-1 bg-red-200 text-white"
+                    : "px-2 py-1 bg-red-500 text-white"
+                }
+                disabled={
+                  row?.status === "rejected" || row?.status === "approved"
+                }>
+                Fake
+              </button>       
+              <button
+              onClick={() => handleAlertConfirmation(row)}
+              className={
+                row?.status === "rejected" || row?.status === "approved"
+                  ? "px-2 py-1 bg-green-200 text-white"
+                  : "px-2 py-1 bg-green-500 text-white"
+              }
+              disabled={
+                row?.status === "rejected" || row?.status === "approved"
+              }
+              >
+              Approve
+            </button>  
           </div>
         </TableCell>
       </TableRow>
@@ -207,17 +229,13 @@ const BalanceRequest = () => {
           <Table className="min-w-full ">
             <TableHead className="bg-orange-100 text-white">
               <TableRow>
-                <TableCell className=" font-bold">Name</TableCell>
-                <TableCell className=" font-bold">Operator</TableCell>
+                <TableCell className=" font-bold">User Email</TableCell>
+                <TableCell className=" font-bold">Transaction Id </TableCell>
                 <TableCell className=" font-bold text-right">
                   Mobile bank
                 </TableCell>
-                <TableCell className=" font-bold text-right">
-                  Payment System
-                </TableCell>
-                <TableCell className=" font-bold text-right">Number</TableCell>
-
-                <TableCell className=" font-bold text-right">Price</TableCell>
+                <TableCell className=" font-bold">Amount </TableCell>
+                
                 <TableCell className=" font-bold text-right">Status</TableCell>
                 <TableCell className=" font-bold text-right">Action</TableCell>
               </TableRow>
@@ -237,16 +255,9 @@ const BalanceRequest = () => {
           </Button>
         </AlertModal>
 
-        {/* update offer with modal */}
-        <Modal handleCancel={handleCancel} isModalOpen={isModalOpen}>
-          <FeedbackForm
-            handleFeedbackFormSubmit={handleFeedbackFormSubmit}></FeedbackForm>
-        </Modal>
+    
       </div>
 
-      {/* <button className="bg-red-400  mt-80" onClick={deleteall}>
-        delete all
-      </button> */}
     </section>
   );
 };

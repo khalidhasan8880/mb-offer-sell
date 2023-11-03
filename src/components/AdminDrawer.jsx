@@ -33,6 +33,15 @@ const AdminDrawer = () => {
       <List className="space-y-2">
         
         <NavLink
+          to={`/dashboard/balance_request`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/dashboard/balance_request")
+              ? "text-green-400"
+              : ""
+          }`}>
+          Balance Request
+        </NavLink>
+        <NavLink
           to={`/dashboard/orders`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
             isNavLinkActive("/dashboard/orders")

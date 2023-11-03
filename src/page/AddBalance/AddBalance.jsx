@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import api from "../../hooks/interceptors";
 import ErrorModal from "../../components/ErrorModal";
 import CopyToClipboard from "../../components/CopyClipboard";
-import Button from "../../components/Button";
+import CustomButton from "../../components/CustomButton";
 
 const AddBalance = () => {
     const { user } = useAuth();
@@ -49,7 +49,6 @@ const AddBalance = () => {
             ...sendMoneyFormData,
             userEmail: user?.email,
             status:"pending",
-            paymentSystem: "add balance",
             date: new Date().toISOString(),
           })
           .then((res) => {
@@ -140,7 +139,7 @@ const AddBalance = () => {
           )}
         </div>
    
-  <Button onClick={handleFormSubmit}  className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mx-auto block mt-2' label='Confirm'></Button>
+  <CustomButton onClick={handleFormSubmit}  className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mx-auto block mt-2' label='Confirm'></CustomButton>
 
   <ErrorModal open={errorModalOpen} onClose={handleCloseErrorModal} error={error} />
         </section>
