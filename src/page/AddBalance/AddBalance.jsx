@@ -5,12 +5,13 @@ import api from "../../hooks/interceptors";
 import ErrorModal from "../../components/ErrorModal";
 import CopyToClipboard from "../../components/CopyClipboard";
 import CustomButton from "../../components/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const AddBalance = () => {
     const { user } = useAuth();
     const [error, setError] = useState(null); 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
-  
+  const navigate = useNavigate()
     const [sendMoneyFormData, setSendMoneyFormData] = useState({
       paymentMethod:"",
       amount: "",
@@ -52,7 +53,7 @@ const AddBalance = () => {
             date: new Date().toISOString(),
           })
           .then((res) => {
-            console.log(res.data);
+            navigate('/')
           })
           .catch(() => {
             setError({ error: true, message: "An error occurred. Please try again later." });

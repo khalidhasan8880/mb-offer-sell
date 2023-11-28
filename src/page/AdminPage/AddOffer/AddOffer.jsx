@@ -18,6 +18,7 @@ const AddOffer = () => {
     offerName: false,
     price: false,
     operator: false,
+    quantity: false,
   });
 
   const divisions = [
@@ -36,12 +37,14 @@ const AddOffer = () => {
     offerName: "",
     price: "",
     note: "",
+    quantity: "",
   });
 
   const initialFormData = {
     offerName: "",
     price: "",
     note: "",
+    quantity: "",
   };
   const resetForm = () => {
     setFormData(initialFormData);
@@ -69,6 +72,9 @@ const AddOffer = () => {
     const errors = {};
     if (!formData.offerName) {
       errors.offerName = true;
+    }
+    if (!formData.quantity) {
+      errors.quantity = true;
     }
     if (!formData.price) {
       errors.price = true;
@@ -194,6 +200,7 @@ const AddOffer = () => {
       <TextField
         required
         label="Price"
+        type="number"
         variant="outlined"
         fullWidth
         name="price"
@@ -201,6 +208,18 @@ const AddOffer = () => {
         onChange={handleInputChange}
         error={formErrors.price}
         helperText={formErrors.price && "Price is required"}
+      />
+      <TextField
+        required
+        label="Quantity"
+        variant="outlined"
+        placeholder="example: 50gb or 50gb + 300min"
+        fullWidth
+        name="quantity"
+        value={formData.quantity}
+        onChange={handleInputChange}
+        error={formErrors.quantity}
+        helperText={formErrors.quantity && "Quantity is required"}
       />
       <TextField
         label="Note"

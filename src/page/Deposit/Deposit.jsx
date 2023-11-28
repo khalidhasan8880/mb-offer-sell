@@ -9,11 +9,11 @@ import {  TextField , Radio,
   import ErrorModal from "../../components/ErrorModal";
   
   const Deposit = () => {
-    const { user } = useAuth();
+    const { user, balance } = useAuth();
     const [error, setError] = useState(null); 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
   
-    const [sendMoneyFormData, setSendMoneyFormData] = useState({
+    const [depositFormData, setDepositFormData] = useState({
       paymentMethod:"",
       amount: "",
       transactionId: "",
@@ -22,24 +22,28 @@ import {  TextField , Radio,
   
     const handleInputChange = (e) => {
       const { name, value } = e.target;
-      setSendMoneyFormData({
-        ...sendMoneyFormData,
+      setDepositFormData({
+        ...depositFormData,
         [name]: value,
       });
     };
   
     const handleFormSubmit = () => {
  
-      if (!sendMoneyFormData?.amount) {
+      if (!depositFormData?.amount) {
         setErrorMassage({ amount: true, message: "please give your number" });
         return;
       }
-      if (!sendMoneyFormData?.paymentMethod) {
+      if (depositFormData?.amount > balance) {
+        setErrorMassage({ amount: true, message: "you don't have enough balance to deposit" });
+        return;
+      }
+      if (!depositFormData?.paymentMethod) {
         setErrorMassage({ paymentMethod: true, message: "please select your mobile bank" });
         return;
       }
   
-      if (!sendMoneyFormData?.transactionId) {
+      if (!depositFormData?.transactionId) {
         setErrorMassage({
           transactionId: true,
           message: "please select a payment method",
@@ -48,17 +52,13 @@ import {  TextField , Radio,
       }
   
       api
-        .post(``, {
-          ...sendMoneyFormData,
+        .post(`deposit-balance`, {
+          ...depositFormData,
           userEmail: user?.email,
-          status:"pending",
-          paymentSystem: "send money",
           date: new Date().toISOString(),
         })
         .then((res) => {
           console.log(res.data);
-          
-        //   nextSlide()
         })
         .catch(() => {
           setError({ error: true, message: "An error occurred. Please try again later." });
@@ -81,7 +81,7 @@ import {  TextField , Radio,
                 </FormLabel>
                 <RadioGroup
                   name="paymentMethod"
-                  value={sendMoneyFormData.paymentMethod}
+                  value={depositFormData.paymentMethod}
                   onChange={handleInputChange}
                   >
                   <FormControlLabel
@@ -114,7 +114,7 @@ import {  TextField , Radio,
               label="Amount"
               variant="outlined"
               fullWidth
-              value={sendMoneyFormData.amount}
+              value={depositFormData.amount}
               onChange={handleInputChange}
               required
             />
@@ -130,7 +130,7 @@ import {  TextField , Radio,
               label="Number"
               variant="outlined"
               fullWidth
-              value={sendMoneyFormData.number}
+              value={depositFormData.number}
               onChange={handleInputChange}
               required
             />
@@ -141,7 +141,8 @@ import {  TextField , Radio,
         
           <button
       onClick={handleFormSubmit}
-      className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transform transition-transform duration-300 ease-in-out"
+      className={` w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transform transition-transform duration-300 ease-in-out `}
+      disabled={ balance < 1}
     >
       Submit
     </button>

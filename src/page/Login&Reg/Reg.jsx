@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -30,6 +31,7 @@ const defaultTheme = createTheme();
 
 export default function Reg() {
   const {createUser, updateUser}= useContext(AuthContext)
+  const navigate  = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,9 +41,10 @@ export default function Reg() {
     createUser(email, password)
     .then(()=>{
       updateUser(name)
+      navigate('/')
     })
     .catch(er=>{
-      console.log(er);
+      return alert(er.message)
     })
     // console.log({
     //   name: data.get('name'),
@@ -78,15 +81,16 @@ export default function Reg() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Name"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  required
                   id="phone"
-                  label="Phone Number (optional)"
+                  label="Phone Number"
                   name="phone"
                   autoComplete="family-name"
                 />

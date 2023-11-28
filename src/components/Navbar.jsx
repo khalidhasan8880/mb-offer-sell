@@ -13,7 +13,15 @@ export default function Navbar() {
   const { user } = useAuth();
   const [notifications, setNotifications] = useState(["dw sd ", "helw dw sd  o"]);
   const [isOpenNotifications, setIsOpenNotification] = useState(false);
+  useEffect(()=>{
+    api.get(`/total-cost-monthly?email=${user?.email}`)
+    .then(res=>{
+      setEstimateCost(res.data)
+      console.log(res.data);
+    })
+   },[user?.email])
 
+   
   useEffect(() => {
     api.get(`/notifications?email=${user?.email}`).then((res) => {
       setNotifications(res.data);

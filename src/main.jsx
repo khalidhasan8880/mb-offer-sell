@@ -27,6 +27,7 @@ import UserOrders from "./page/UserOrders.jsx/UserOrders.jsx";
 import AddBalance from "./page/AddBalance/AddBalance.jsx";
 import BalanceRequest from "./page/AdminPage/BalanceRequest/BalanceRequest.jsx";
 import Deposit from "./page/Deposit/Deposit.jsx";
+import Transaction from "./page/Transaction/Transaction.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
       {
         path: "deposit",
         element: <PrivetRoute><Deposit></Deposit></PrivetRoute>,
+      },
+      {
+        path: "transaction",
+        element: <PrivetRoute><Transaction></Transaction></PrivetRoute>,
       },
     ],
   },

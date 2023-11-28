@@ -31,12 +31,12 @@ const BalanceRequest = () => {
   const handleSearch = async () => {
     try {
       if (searchTerm) {
-        const res = await api.post(`balance/search?email=${user?.email}`, {
+        const res = await api.post(`balance-requests/search?email=${user?.email}`, {
           searchTerm,
         });
         setData(res.data);
       } else {
-        const res = await api.get(`balance?email=${user?.email}`);
+        const res = await api.get(`balance-requests?email=${user?.email}`);
         setData(res?.data);
       }
     } catch (error) {
@@ -45,7 +45,7 @@ const BalanceRequest = () => {
   };
 
   useEffect(() => {
-    api.get(`balance?email=${user?.email}`).then((res) => {
+    api.get(`balance-requests?email=${user?.email}`).then((res) => {
       setGetUserLoading(false);
       setData(res.data);
       console.log(res.data);

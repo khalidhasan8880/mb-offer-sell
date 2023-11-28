@@ -15,19 +15,13 @@ const [estimateCost, setEstimateCost] = useState({})
 useEffect(()=>{
   const token = localStorage.getItem("token")
   if (token) {
-    api.get(`/get-balance?email=${user?.email}`)
+    api.get(`/get-user?email=${user?.email}`)
     .then(res=>{
       setBalance(res.data?.balance)
     })
   } 
  },[user?.email])
- useEffect(()=>{
-  api.get(`/total-cost-monthly?email=${user?.email}`)
-  .then(res=>{
-    setEstimateCost(res.data)
-  })
- 
- },[user?.email])
+
 
 
   // google authentication
@@ -73,7 +67,6 @@ useEffect(()=>{
             method:"POST",
             headers:{
               "content-type":"application/json",  
-              // user:JSON.stringify()             
             },
             body:JSON.stringify({email:currentUser?.email, name:currentUser?.displayName})
           })
