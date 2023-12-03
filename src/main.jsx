@@ -128,6 +128,10 @@ const router = createBrowserRouter([
         element:<AdminRoute><BalanceRequest></BalanceRequest></AdminRoute>
       },
       {
+        path:'deposit_request', 
+        element:<AdminRoute><BalanceRequest></BalanceRequest></AdminRoute>
+      },
+      {
         path:'orders', 
         element:<AdminRoute><Orders></Orders></AdminRoute>
       },

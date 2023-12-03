@@ -39,7 +39,16 @@ const AdminDrawer = () => {
               ? "text-green-400"
               : ""
           }`}>
-          Balance Request
+          Balance Requests
+        </NavLink>
+        <NavLink
+          to={`/dashboard/deposit_request`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/dashboard/deposit_request")
+              ? "text-green-400"
+              : ""
+          }`}>
+          deposit Requests
         </NavLink>
         <NavLink
           to={`/dashboard/orders`}
