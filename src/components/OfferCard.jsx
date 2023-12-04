@@ -21,19 +21,16 @@ const OfferCard = ({ offer, handleBuyClick }) => {
         </h2>
         <div className="flex justify-between mb-2">
           <div className="text-left">
-            <p className="text-sm text-gray-600">{truncateText(offer?.operator, 30)}</p>
-            <p className="text-sm text-gray-600">{truncateText(offer?.division, 30)}</p>
+            
+            <p className="text-sm text-gray-600">For</p>
+            <p className="text-sm text-gray-600">Price</p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-600">{truncateText(offer.offerType, 30)}</p>
+            <p className="text-sm text-gray-600">{truncateText(offer?.division, 30)}</p>
             <p className="text-sm text-gray-600">{truncateText(offer.price, 30)}</p>
           </div>
         </div>
-        <div className="mt-4">
-          <p className="text-sm text-gray-600 cursor-pointer underline">
-            {truncateText(offer.note, 100)}
-          </p>
-        </div>
+  
       </div>
     );
   };

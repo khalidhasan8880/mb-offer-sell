@@ -20,7 +20,6 @@ import CopyToClipboard from "../../../components/CopyClipboard";
 
 const Orders = () => {
   const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [getUserLoading, setGetUserLoading] = useState(true);
   const [viewDetails, setViewDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,21 +27,7 @@ const Orders = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const { user } = useAuth();
 
-  const handleSearch = async () => {
-    try {
-      if (searchTerm) {
-        const res = await api.post(`payment/search?email=${user?.email}`, {
-          searchTerm,
-        });
-        setData(res.data);
-      } else {
-        const res = await api.get(`payments?email=${user?.email}`);
-        setData(res?.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   useEffect(() => {
     api.get(`payments?email=${user?.email}`).then((res) => {
@@ -104,7 +89,6 @@ const Orders = () => {
     e.preventDefault();
     const form = e.target;
     const feedback = form.feedback?.value;
-
     api
       .put(`/payment/reject/${viewDetails?._id}?email=${user?.email}`, {
         feedback,
@@ -224,28 +208,7 @@ const Orders = () => {
 
   return (
     <section>
-      <div className=" mx-auto py-8">
-        <div className="flex items-center mb-5 bg-gray-100 rounded-full p-2 px-4">
-          <SearchIcon className="text-gray-500" />
-          <TextField
-            id="search"
-            placeholder="Search..."
-            variant="standard"
-            fullWidth
-            InputProps={{
-              disableUnderline: true,
-              className: "ml-2",
-            }}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onBlur={handleSearch}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
-        </div>
+      <div className=" mx-auto py-8">        
         <TableContainer component={Paper} className="shadow-lg">
           <Table className="min-w-full ">
             <TableHead className="bg-orange-100 text-white">

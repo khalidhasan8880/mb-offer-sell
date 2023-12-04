@@ -27,21 +27,16 @@ const PayWithBalance = ({ offer, formData,nextSlide }) => {
       .then((res) => {
         console.log(res?.data);
         
-        if (res.response?.data?.error && res.response?.data?.message === "You don't have enough balance") {
-          setError({ error: true, message: "You don't have enough balance" });
+        if (res.response?.data?.error) {
+          setError({ error: true, message: "Please check your balance or try again later." });
           setErrorModalOpen(true);
           return 
         }
         nextSlide()
       })
-      .catch((error) => {
-        if (error.response?.data?.error && error.response?.data?.message === "You don't have enough balance") {
-          setError({ error: true, message: "You don't have enough balance" });
+      .catch(() => {
+        setError({ error: true, message: "Please check your balance or try again later." });
           setErrorModalOpen(true);
-        } else {
-          setError({ error: true, message: "An error occurred. Please try again later." });
-          setErrorModalOpen(true);
-        }
       });
   };
   const handleCloseErrorModal = () => {

@@ -19,13 +19,13 @@ const ErrorModal = ({ open, onClose, error }) => {
           p: 4,
         }}
       >
-        <Typography variant="h5" component="div" gutterBottom>
+        <Typography variant="h5" color="error" component="div" gutterBottom>
           Error
         </Typography>
         <Typography variant="body1" gutterBottom>
           {error?.message}
         </Typography>
-        <Button variant="contained" onClick={onClose}>
+        <Button variant="contained" sx={{mt:3}} onClick={onClose}>
           Close
         </Button>
       </Box>

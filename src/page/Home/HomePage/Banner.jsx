@@ -20,7 +20,7 @@ console.log(balance);
             <h2 className="my-0 font-extrabold text-black/60">{user?.displayName}</h2>           
           </div>
         </div>
-        <h2 className={`text-2xl font-bold ${balance >= 0 ? 'text-teal-500':'text-red-500'}`}>Balance : {balance || 0 } ৳</h2>
+        <h2 className={`text-2xl font-bold ${balance >= 0 ? 'text-teal-500':'text-red-500'}`}>Balance : {balance || "..." } ৳</h2>
         <Link
           className="bg-teal-500 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition duration-200 "
           to="/add_balance">
