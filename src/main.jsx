@@ -28,6 +28,7 @@ import AddBalance from "./page/AddBalance/AddBalance.jsx";
 import BalanceRequest from "./page/AdminPage/BalanceRequest/BalanceRequest.jsx";
 import Deposit from "./page/Deposit/Deposit.jsx";
 import Transaction from "./page/Transaction/Transaction.jsx";
+import DepositRequest from "./page/AdminPage/DepositRequest/DepositRequest.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -129,7 +130,7 @@ const router = createBrowserRouter([
       },
       {
         path:'deposit_request', 
-        element:<AdminRoute><BalanceRequest></BalanceRequest></AdminRoute>
+        element:<AdminRoute><DepositRequest></DepositRequest></AdminRoute>
       },
       {
         path:'orders', 

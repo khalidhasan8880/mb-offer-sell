@@ -7,16 +7,17 @@ import {  TextField , Radio,
   import api from "../../hooks/interceptors";
   import useAuth from "../../hooks/useAuth";
   import ErrorModal from "../../components/ErrorModal";
+import { Balance } from "@mui/icons-material";
   
   const Deposit = () => {
     const { user, balance } = useAuth();
-    const [error, setError] = useState(null); 
+    const [error, setError] = useState({}); 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
   
     const [depositFormData, setDepositFormData] = useState({
       paymentMethod:"",
       amount: "",
-      transactionId: "",
+      number:""
     });
     const [errorMassage, setErrorMassage] = useState({});
   
@@ -27,32 +28,38 @@ import {  TextField , Radio,
         [name]: value,
       });
     };
-  
+    function isValidBangladeshPhoneNumber(phoneNumber) {
+      var regex = /^(?:\+880|0)(?:\d{9}|\d{10})$/;
+      return regex.test(phoneNumber);
+    }
     const handleFormSubmit = () => {
- 
-      if (!depositFormData?.amount) {
+
+
+      console.log(error)
+      if (!depositFormData?.number) {
         setErrorMassage({ amount: true, message: "please give your number" });
         return;
       }
-      if (depositFormData?.amount > balance) {
-        setErrorMassage({ amount: true, message: "you don't have enough balance to deposit" });
+      if (!isValidBangladeshPhoneNumber(depositFormData?.number)) {
+        setError({
+          number: true,
+          message: "please give your number correctly",
+        });
         return;
       }
+      
       if (!depositFormData?.paymentMethod) {
         setErrorMassage({ paymentMethod: true, message: "please select your mobile bank" });
         return;
       }
-  
-      if (!depositFormData?.transactionId) {
-        setErrorMassage({
-          transactionId: true,
-          message: "please select a payment method",
-        });
+      if (parseInt(depositFormData?.amount) > parseInt(balance) ) {
+        setErrorMassage({ amount: true, message: "you don't have enough balance to deposit" });
         return;
       }
-  
+    
+      
       api
-        .post(`deposit-balance`, {
+        .post(`/deposit-balance?email=${user?.email}`, {
           ...depositFormData,
           userEmail: user?.email,
           date: new Date().toISOString(),

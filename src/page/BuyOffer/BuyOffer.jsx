@@ -71,14 +71,20 @@ const BuyOffer = () => {
     nextSlide();
   };
 
-  
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipe:false,    
+  };
 
   if (loading) {
     return <Loading></Loading>;
   }
   return (
     <section className="">
-      <Carousel sliderRef={sliderRef}  className="">
+      <Carousel sliderRef={sliderRef}  settings={settings}>
       <div className="max-w-2xl mx-auto">
           <h2 className="font-semibold text-gray-800 text-2xl my-2">
             {offer?.offerName}

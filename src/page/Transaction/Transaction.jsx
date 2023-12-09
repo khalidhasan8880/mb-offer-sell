@@ -6,9 +6,9 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PaymentHistory from './PaymentHistory/PaymentHistory';
 import BalanceHistory from './BalanceHistory/BalanceHistory';
+import DepositHistory from './DepositHistory/DepositHistory';
 
 export default function Transaction() {
-  const isMobile = useMediaQuery('(max-width:600px)');
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -35,23 +35,7 @@ export default function Transaction() {
     );
   }
   
-  if (isMobile) {
-    // Render a different UI pattern for mobile devices
-    return (
-      <section>
-        <select value={value} onChange={(e) => setValue(parseInt(e.target.value))}>
-          <option value={0}>Payment History</option>
-          <option value={1}>Added Balances</option>
-          <option value={2}>Deposit History</option>
-          {/* You can customize the options as needed */}
-        </select>
-        {/* Render content based on selected tab */}
-        {value === 0 && <TabPanel>Payment History</TabPanel>}
-        {value === 1 && <TabPanel>Added Balances</TabPanel>}
-        {value === 2 && <TabPanel>Deposit History</TabPanel>}
-      </section>
-    );
-  }
+ 
 
   // Render tabs for larger screens
   return (
@@ -59,20 +43,18 @@ export default function Transaction() {
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Payment History" />
+         
             <Tab label="Added Balances" />
-            {/* <Tab label="Deposit Balances" /> */}
+            <Tab label="Deposit Balances" />
           </Tabs>
         </Box>
+       
         <TabPanel value={value} index={0}>
-         <PaymentHistory></PaymentHistory>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
          <BalanceHistory></BalanceHistory>
         </TabPanel>
-        {/* <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <DepositHistory></DepositHistory>
-        </TabPanel> */}
+        </TabPanel>
       </Box>
     </section>
   );

@@ -8,41 +8,20 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import AlertModal from "../../../components/AlertModal";
-import Modal from "../../../components/Modal";
 import useAuth from "../../../hooks/useAuth";
-import FeedbackForm from "../../../components/FeedbackForm";
 import CopyToClipboard from "../../../components/CopyClipboard";
+import ConfirmationDialog from "../../../components/ConfirmationDialog";
 
 const BalanceRequest = () => {
   const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [getUserLoading, setGetUserLoading] = useState(true);
-  const [viewDetails, setViewDetails] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isApproveDialogOpen, setApproveDialogOpen] = useState(false);
   const { user } = useAuth();
 
-  const handleSearch = async () => {
-    try {
-      if (searchTerm) {
-        const res = await api.post(`balance-requests/search?email=${user?.email}`, {
-          searchTerm,
-        });
-        setData(res.data);
-      } else {
-        const res = await api.get(`balance-requests?email=${user?.email}`);
-        setData(res?.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   useEffect(() => {
     api.get(`balance-requests?email=${user?.email}`).then((res) => {
@@ -52,73 +31,46 @@ const BalanceRequest = () => {
     });
   }, [user]);
 
-  const handleAlertConfirmation = (row) => {
-    setAlertMessage("Are you sure you want to approve this item?");
-    setViewDetails(row);
-    setIsAlertOpen(true);
-  };
-  const handleFakeTransitionConfirmation = (row) => {
-    setAlertMessage("Are you sure you this was a fake transition?");
-    setViewDetails(row);
-    setIsAlertOpen(true);
+ 
+  const handleDeleteClick = (id) => {
+    setSelectedId(id);
+    setDeleteDialogOpen(true);
   };
 
-  const handleRejectOrder = (row) => {
-    setViewDetails(row);
-    setIsModalOpen(true);
+  const handleApproveClick = (id) => {
+    setSelectedId(id);
+    setApproveDialogOpen(true);
   };
 
-  const handleFakeTransition = () => {
-    console.log("fake");
+  const handleFakeConfirm = () => {
     api
-      .put(`/payment/fake/${viewDetails?._id}?email=${user?.email}`)
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
+      .post(`/payment/fake/${selectedId}?email=${user?.email}`)
+      .then((res) => {
+        console.log(res);
       });
-
-    setIsAlertOpen(false);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
+    setSelectedId(null);
   };
-  const handleApproved = () => {
-    console.log("/approved/add-balance/:id");
-    api
-      .put(`/approved/add-balance/${viewDetails?._id}?email=${user?.email}`)
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
-      });
 
-    setIsAlertOpen(false);
+  const handleApprovedConfirm = () => {
+    api
+    .post(`/approved-balance-request/${selectedId}?email=${user?.email}`)
+    .then((res) => {
+      console.log(res);
+    });
+    setSelectedId(null);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
   };
 
   const handleCancel = () => {
-    setViewDetails(null);
-    setIsAlertOpen(false);
-    setIsModalOpen(false);
+    setSelectedId(null);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
   };
+  
 
-  const handleFeedbackFormSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const feedback = form.feedback?.value;
-
-    api
-      .put(`/payment/reject/${viewDetails?._id}?email=${user?.email}`, {
-        feedback,
-      })
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-        setIsModalOpen(false);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
-        setIsModalOpen(false);
-      });
-  };
   if (getUserLoading) {
     return <Loading></Loading>;
   }
@@ -162,7 +114,7 @@ const BalanceRequest = () => {
         <TableCell className="font-extralight text-xs ">
           <div className="flex gap-2">
           <button
-                onClick={() => handleFakeTransition(row)}
+                onClick={() => handleDeleteClick(row?._id)}
                 className={
                   row?.status === "rejected" || row?.status === "approved"
                     ? "px-2 py-1 bg-red-200 text-white"
@@ -174,7 +126,7 @@ const BalanceRequest = () => {
                 Fake
               </button>       
               <button
-              onClick={() => handleAlertConfirmation(row)}
+              onClick={() => handleApproveClick(row?._id)}
               className={
                 row?.status === "rejected" || row?.status === "approved"
                   ? "px-2 py-1 bg-green-200 text-white"
@@ -192,39 +144,13 @@ const BalanceRequest = () => {
     ));
   };
 
-  // const deleteall = () => {
-  //   api.delete("/delete-all").then((res) => {
-  //     console.log(res.data);
-  //   });
-  // };
   if (getUserLoading) {
     return <Loading />;
   }
 
   return (
     <section>
-      <div className=" mx-auto py-8">
-        <div className="flex items-center mb-5 bg-gray-100 rounded-full p-2 px-4">
-          <SearchIcon className="text-gray-500" />
-          <TextField
-            id="search"
-            placeholder="Search..."
-            variant="standard"
-            fullWidth
-            InputProps={{
-              disableUnderline: true,
-              className: "ml-2",
-            }}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onBlur={handleSearch}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
-        </div>
+     
         <TableContainer component={Paper} className="shadow-lg">
           <Table className="min-w-full ">
             <TableHead className="bg-orange-100 text-white">
@@ -246,18 +172,19 @@ const BalanceRequest = () => {
           </Table>
         </TableContainer>
 
-        <AlertModal open={isAlertOpen} severity="warning" title={alertMessage}>
-          <Button onClick={handleApproved} color="secondary" size="small">
-            Yes
-          </Button>
-          <Button onClick={handleCancel} color="primary" size="small">
-            No
-          </Button>
-        </AlertModal>
+      <ConfirmationDialog
+          open={isDeleteDialogOpen}
+          onClose={handleCancel}
+          onConfirm={handleFakeConfirm}
+          action="mark this request as fake"
+        />
 
-    
-      </div>
-
+        <ConfirmationDialog
+          open={isApproveDialogOpen}
+          onClose={handleCancel}
+          onConfirm={handleApprovedConfirm}
+          action="Approve"
+        />
     </section>
   );
 };
