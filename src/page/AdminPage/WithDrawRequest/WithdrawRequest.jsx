@@ -13,7 +13,7 @@ import useAuth from "../../../hooks/useAuth";
 import CopyToClipboard from "../../../components/CopyClipboard";
 import ConfirmationDialog from "../../../components/ConfirmationDialog";
 
-const DepositRequest = () => {
+const WithdrawRequest = () => {
   const [data, setData] = useState([]);
   const [getUserLoading, setGetUserLoading] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
@@ -163,14 +163,6 @@ const DepositRequest = () => {
           </Table>
         </TableContainer>
 
-        {/* <AlertModal open={isAlertOpen} severity="warning" title={alertMessage}>
-          <Button onClick={handleApproved} color="secondary" size="small">
-            Yes
-          </Button>
-          <Button onClick={handleCancel} color="primary" size="small">
-            No
-          </Button>
-        </AlertModal> */}
         <ConfirmationDialog
           open={isDeleteDialogOpen}
           onClose={handleCancel}
@@ -189,4 +181,4 @@ const DepositRequest = () => {
   );
 };
 
-export default DepositRequest;
+export default WithdrawRequest;

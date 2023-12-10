@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const OfferCard = ({ offer, handleBuyClick }) => {
+const OfferCard = ({ offer }) => {
     const truncateText = (text, maxLength) => {
       if (text.length > maxLength) {
         return text.substr(0, maxLength) + '...';

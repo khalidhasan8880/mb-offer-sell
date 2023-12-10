@@ -37,9 +37,7 @@ export default function BasicTab({internet, minute, combo, className}) {
   const [selectedOfferId, setSelectedOfferId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -49,10 +47,7 @@ export default function BasicTab({internet, minute, combo, className}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-const handleBuyClick = (id)=>{
-  setSelectedOfferId(id)
-  openModal()
-}
+
   return (
    <section>
      <Box sx={{ width: '100%' }}>
@@ -64,13 +59,13 @@ const handleBuyClick = (id)=>{
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {internet?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
+        {internet?.map(offer => <OfferCard key={offer?._id} offer={offer} ></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {minute?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
+        {minute?.map(offer => <OfferCard key={offer?._id} offer={offer} ></OfferCard>)}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {combo?.map(offer => <OfferCard key={offer?._id} offer={offer} handleBuyClick={handleBuyClick}></OfferCard>)}
+        {combo?.map(offer => <OfferCard key={offer?._id} offer={offer} ></OfferCard>)}
       </TabPanel>
     </Box>
 

@@ -8,11 +8,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import AlertModal from "../../../components/AlertModal";
 import Modal from "../../../components/Modal";
 import useAuth from "../../../hooks/useAuth";
 import FeedbackForm from "../../../components/FeedbackForm";
@@ -21,10 +17,7 @@ import CopyToClipboard from "../../../components/CopyClipboard";
 const Orders = () => {
   const [data, setData] = useState([]);
   const [getUserLoading, setGetUserLoading] = useState(true);
-  const [viewDetails, setViewDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
   const { user } = useAuth();
 
 
@@ -36,71 +29,43 @@ const Orders = () => {
     });
   }, [user]);
 
-  const handleAlertConfirmation = (row) => {
-    setAlertMessage("Are you sure you want to approve this item?");
-    setViewDetails(row);
-    setIsAlertOpen(true);
-  };
-  const handleFakeTransitionConfirmation = (row) => {
-    setAlertMessage("Are you sure you this was a fake transition?");
-    setViewDetails(row);
-    setIsAlertOpen(true);
+
+  const handleFakeClick = (id) => {
+    setSelectedId(id);
+    setDeleteDialogOpen(true);
   };
 
-  const handleRejectOrder = (row) => {
-    setViewDetails(row);
-    setIsModalOpen(true);
+  const handleApproveClick = (id) => {
+    setSelectedId(id);
+    setApproveDialogOpen(true);
   };
 
-  const handleFakeTransition = () => {
-    console.log("fake");
+  const handleFakeConfirm = () => {
     api
-      .put(`/payment/fake/${viewDetails?._id}?email=${user?.email}`)
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
+      .post(`/payment/fake/${selectedId}?email=${user?.email}`)
+      .then((res) => {
+        console.log(res);
       });
-
-    setIsAlertOpen(false);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
+    setSelectedId(null);
   };
-  const handleApproved = () => {
-    console.log("approved");
-    api
-      .put(`/payment/approved/${viewDetails?._id}?email=${user?.email}`)
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
-      });
 
-    setIsAlertOpen(false);
+  const handleApprovedConfirm = () => {
+    api
+    .post(`/approved-deposit-request/${selectedId}?email=${user?.email}`)
+    .then((res) => {
+      console.log(res);
+    });
+    setSelectedId(null);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
   };
 
   const handleCancel = () => {
-    setViewDetails(null);
-    setIsAlertOpen(false);
-    setIsModalOpen(false);
-  };
-
-  const handleFeedbackFormSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const feedback = form.feedback?.value;
-    api
-      .put(`/payment/reject/${viewDetails?._id}?email=${user?.email}`, {
-        feedback,
-      })
-      .then((response) => {
-        console.log(" successfully.", response?.data);
-        setIsModalOpen(false);
-      })
-      .catch((error) => {
-        console.error("Error item:", error);
-        setIsModalOpen(false);
-      });
+    setSelectedId(null);
+    setDeleteDialogOpen(false);
+    setApproveDialogOpen(false);
   };
   if (getUserLoading) {
     return <Loading></Loading>;
@@ -197,11 +162,7 @@ const Orders = () => {
     ));
   };
 
-  // const deleteall = () => {
-  //   api.delete("/delete-all").then((res) => {
-  //     console.log(res.data);
-  //   });
-  // };
+
   if (getUserLoading) {
     return <Loading />;
   }
@@ -234,14 +195,19 @@ const Orders = () => {
           </Table>
         </TableContainer>
 
-        <AlertModal open={isAlertOpen} severity="warning" title={alertMessage}>
-          <Button onClick={handleApproved} color="secondary" size="small">
-            Yes
-          </Button>
-          <Button onClick={handleCancel} color="primary" size="small">
-            No
-          </Button>
-        </AlertModal>
+        <ConfirmationDialog
+          open={isDeleteDialogOpen}
+          onClose={handleCancel}
+          onConfirm={handleFakeConfirm}
+          action="mark this request as fake"
+        />
+
+        <ConfirmationDialog
+          open={isApproveDialogOpen}
+          onClose={handleCancel}
+          onConfirm={handleApprovedConfirm}
+          action="Approve"
+        />
 
         {/* update offer with modal */}
         <Modal handleCancel={handleCancel} isModalOpen={isModalOpen}>
@@ -249,10 +215,6 @@ const Orders = () => {
             handleFeedbackFormSubmit={handleFeedbackFormSubmit}></FeedbackForm>
         </Modal>
       </div>
-
-      {/* <button className="bg-red-400  mt-80" onClick={deleteall}>
-        delete all
-      </button> */}
     </section>
   );
 };

@@ -20,7 +20,7 @@ const PayWithBalance = ({ offer, formData,nextSlide }) => {
         offerId: _id,
         operator,
         price,
-        status:"pending",
+       
         paymentSystem: "pay with balance",
         date: new Date().toISOString(),
       })

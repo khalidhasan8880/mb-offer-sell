@@ -10,7 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import CopyToClipboard from "../../../components/CopyClipboard";
-const DepositHistory = () => {
+const WithdrawHistory = () => {
     const{user}=useAuth()
     const { data, isLoading} = useFetchData(`/deposit-history/${user?.email}?email=${user?.email}`);
 console.log(data);
@@ -98,4 +98,4 @@ const RenderTableRows = () => {
     );
 };
 
-export default DepositHistory;
+export default WithdrawHistory;

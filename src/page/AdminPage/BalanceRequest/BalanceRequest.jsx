@@ -55,7 +55,7 @@ const BalanceRequest = () => {
 
   const handleApprovedConfirm = () => {
     api
-    .post(`/approved-balance-request/${selectedId}?email=${user?.email}`)
+    .post(`/approved-deposit/${selectedId}?email=${user?.email}`)
     .then((res) => {
       console.log(res);
     });
