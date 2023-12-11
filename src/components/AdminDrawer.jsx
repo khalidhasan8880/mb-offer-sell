@@ -31,7 +31,33 @@ const AdminDrawer = () => {
   const list = () => (
     <Box sx={{ width: 250 }} role="presentation">
       <List className="space-y-2">
-        
+      <NavLink
+          to={`/dashboard/orders`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/dashboard/orders")
+              ? "text-green-400"
+              : ""
+          }`}>
+          Orders
+        </NavLink>
+        <NavLink
+          to={`/dashboard/add_offer`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/dashboard/add_offer")
+              ? "text-green-400"
+              : ""
+          }`}>
+          Add Offer
+        </NavLink>
+        <NavLink
+          to={`/dashboard/manage_offers`}
+          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
+            isNavLinkActive("/dashboard/manage_offers")
+              ? "text-green-400"
+              : ""
+          }`}>
+          Manage Offers
+        </NavLink>
         <NavLink
           to={`/dashboard/balance_request`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
@@ -42,42 +68,18 @@ const AdminDrawer = () => {
           Balance Requests
         </NavLink>
         <NavLink
-          to={`/dashboard/deposit_request`}
+          to={`/dashboard/withdraw_request`}
           className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/dashboard/deposit_request")
+            isNavLinkActive("/dashboard/withdraw_request")
               ? "text-green-400"
               : ""
           }`}>
-          deposit Requests
+          Withdraw Requests
         </NavLink>
-        <NavLink
-          to={`/dashboard/orders`}
-          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/dashboard/orders")
-              ? "text-green-400"
-              : ""
-          }`}>
-          Orders
-        </NavLink>
-        <NavLink
-          to={`/dashboard/manage_users`}
-          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/dashboard/manage_users")
-              ? "text-green-400"
-              : ""
-          }`}>
-          Manage Users
-        </NavLink>
+        
+       
 
-        <NavLink
-          to={`/dashboard/manage_offers`}
-          className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-            isNavLinkActive("/dashboard/manage_offers")
-              ? "text-green-400"
-              : ""
-          }`}>
-          Manage Offers
-        </NavLink>
+      
       </List>
     </Box>
   );

@@ -59,8 +59,6 @@ const SendMoney = ({ offer, formData, nextSlide }) => {
         offerId: _id,
         operator,
         price,
-        status:"pending",
-        paymentSystem: "send money",
         date: new Date().toISOString(),
       })
       .then((res) => {

@@ -13,17 +13,21 @@ import Modal from "../../../components/Modal";
 import useAuth from "../../../hooks/useAuth";
 import FeedbackForm from "../../../components/FeedbackForm";
 import CopyToClipboard from "../../../components/CopyClipboard";
+import ConfirmationDialog from "../../../components/ConfirmationDialog";
 
 const Orders = () => {
   const [data, setData] = useState([]);
   const [getUserLoading, setGetUserLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isApproveDialogOpen, setApproveDialogOpen] = useState(false);
   const { user } = useAuth();
 
 
 
   useEffect(() => {
-    api.get(`payments?email=${user?.email}`).then((res) => {
+    api.get(`/payments/order?email=${user?.email}`).then((res) => {
       setGetUserLoading(false);
       setData(res.data);
     });
@@ -53,7 +57,7 @@ const Orders = () => {
 
   const handleApprovedConfirm = () => {
     api
-    .post(`/approved-deposit-request/${selectedId}?email=${user?.email}`)
+    .post(`/approved-withdraw/${selectedId}?email=${user?.email}`)
     .then((res) => {
       console.log(res);
     });
@@ -67,6 +71,10 @@ const Orders = () => {
     setDeleteDialogOpen(false);
     setApproveDialogOpen(false);
   };
+
+  const handleFeedbackFormSubmit = ()=>{
+    console.log('helllooooooooo')
+  }
   if (getUserLoading) {
     return <Loading></Loading>;
   }
@@ -116,36 +124,17 @@ const Orders = () => {
         </TableCell>
         <TableCell className="font-extralight text-xs ">
           <div className="flex gap-2">
-            {row?.paymentSystem === "send money" ? (
-              <>
-                <button
-                  onClick={() => handleFakeTransitionConfirmation(row)}
+          <button
+                  onClick={() => handleFakeClick(row?._id)}
+                  disabled={
+                    row?.status === "rejected" || row?.status === "approved"
+                  }
                   className="px-2 py-1 bg-yellow-700 text-white">
-                  Fake Send Money
+                  Fake
                 </button>
-                <button
-                  onClick={() => handleFakeTransitionConfirmation(row)}
-                  className="px-2 py-1 bg-sky-700 text-white">
-                  Return Cash 
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={() => handleRejectOrder(row)}
-                className={
-                  row?.status === "rejected" || row?.status === "approved"
-                    ? "px-2 py-1 bg-red-200 text-white"
-                    : "px-2 py-1 bg-red-500 text-white"
-                }
-                disabled={
-                  row?.status === "rejected" || row?.status === "approved"
-                }>
-                Reject
-              </button>
-            )}
 
             <button
-              onClick={() => handleAlertConfirmation(row)}
+              onClick={() => handleApproveClick(row)}
               className={
                 row?.status === "rejected" || row?.status === "approved"
                   ? "px-2 py-1 bg-green-200 text-white"

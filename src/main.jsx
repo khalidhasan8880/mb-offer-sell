@@ -16,7 +16,6 @@ import AdminRoute from "./AdminRoute/AdminRoute.jsx";
 import ManageOffer from "./page/AdminPage/ManageOffer/ManageOffer.jsx";
 import AdminHome from "./page/AdminPage/AdminHome/AdminHome.jsx";
 import AddOffer from "./page/AdminPage/AddOffer/AddOffer.jsx";
-import ManageUser from "./page/AdminPage/ManageUser/ManageUser.jsx";
 import BuyOffer from "./page/BuyOffer/BuyOffer.jsx";
 import Orders from "./page/AdminPage/Orders.jsx/Orders.jsx";
 import PrivetRoute from "./PrivetRoute/PrivetRoute.jsx";
@@ -26,9 +25,9 @@ import First from "./TestSome/First.jsx";
 import UserOrders from "./page/UserOrders.jsx/UserOrders.jsx";
 import AddBalance from "./page/AddBalance/AddBalance.jsx";
 import BalanceRequest from "./page/AdminPage/BalanceRequest/BalanceRequest.jsx";
-import Deposit from "./page/Deposit/Deposit.jsx";
 import Transaction from "./page/Transaction/Transaction.jsx";
 import WithdrawRequest from "./page/AdminPage/WithDrawRequest/WithdrawRequest.jsx";
+import Withdraw from "./page/Withdraw/Withdraw.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -107,8 +106,8 @@ const router = createBrowserRouter([
         element: <PrivetRoute><UserOrders></UserOrders></PrivetRoute>,
       },
       {
-        path: "deposit",
-        element: <PrivetRoute><Deposit></Deposit></PrivetRoute>,
+        path: "withdraw",
+        element: <PrivetRoute><Withdraw></Withdraw></PrivetRoute>,
       },
       {
         path: "transaction",
@@ -136,14 +135,7 @@ const router = createBrowserRouter([
         path:'orders', 
         element:<AdminRoute><Orders></Orders></AdminRoute>
       },
-      // {
-      //   path:'manage_deposit', 
-      //   element:<AdminRoute></AdminRoute>
-      // },
-      {
-        path:'manage_users', 
-        element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
-      },
+    
       {
         path:'manage_offers', 
         element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
@@ -151,23 +143,7 @@ const router = createBrowserRouter([
       {
         path:'add_offer', 
       element:<AdminRoute><AddOffer></AddOffer></AdminRoute>
-      },
-      {
-        path:'offer/airtel', 
-        element:<AdminRoute></AdminRoute>
-      },
-      {
-        path:'offer/robi', 
-        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
-      },
-      {
-        path:'offer/airtel', 
-        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
-      },
-      {
-        path:'offer/airtel', 
-        element:<AdminRoute><ManageOffer></ManageOffer></AdminRoute>
-      },
+      }
     ]
   }
 ]);

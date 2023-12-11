@@ -98,11 +98,11 @@ const Drawer
               </NavLink>
         
          <NavLink
-              to={"/deposit"}
+              to={"/withdraw"}
               className={`block px-4 py-3 rounded-md hover:bg-green-100 font-semibold ${
-                isChildRouteActive("/deposit") ? "text-green-400" : ""
+                isChildRouteActive("/withdraw") ? "text-green-400" : ""
               }`}>
-             Deposit
+            Withdraw
               </NavLink>
          <NavLink
               to={"/transaction"}

@@ -12,7 +12,7 @@ import {
 import CopyToClipboard from "../../../components/CopyClipboard";
 const WithdrawHistory = () => {
     const{user}=useAuth()
-    const { data, isLoading} = useFetchData(`/deposit-history/${user?.email}?email=${user?.email}`);
+    const { data, isLoading} = useFetchData(`/withdraw-history/${user?.email}?email=${user?.email}`);
 console.log(data);
 
 

@@ -9,7 +9,7 @@ import {  TextField , Radio,
   import ErrorModal from "../../components/ErrorModal";
 import { Balance } from "@mui/icons-material";
   
-  const Deposit = () => {
+  const Withdraw = () => {
     const { user, balance } = useAuth();
     const [error, setError] = useState({}); 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -59,7 +59,7 @@ import { Balance } from "@mui/icons-material";
     
       
       api
-        .post(`/deposit-balance?email=${user?.email}`, {
+        .post(`/withdraw-balance?email=${user?.email}`, {
           ...depositFormData,
           userEmail: user?.email,
           date: new Date().toISOString(),
@@ -159,5 +159,5 @@ import { Balance } from "@mui/icons-material";
     );
   };
   
-  export default Deposit;
+  export default Withdraw;
   

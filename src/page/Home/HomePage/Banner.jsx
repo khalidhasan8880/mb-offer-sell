@@ -20,12 +20,14 @@ console.log(balance);
             <h2 className="my-0 font-extrabold text-black/60">{user?.displayName}</h2>           
           </div>
         </div>
+        <div className="flex flex-wrap gap-y-4 w-full justify-between sm:flex-col items-center sm:items-start  ">
         <h2 className={`text-2xl font-bold ${balance >= 0 ? 'text-teal-500':'text-red-500'}`}>Balance : {balance || "..." } ৳</h2>
         <Link
           className="bg-teal-500 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition duration-200 "
           to="/add_balance">
           Add Balance
         </Link>
+        </div>
       </div>
       <div className="flex-between flex-wrap items-end sm:flex-col  sm:text-right mt-5 sm:mt-0">
         <h2 className="text-2xl font-bold sm:mb-2 text-black/60">Total Cost</h2>
